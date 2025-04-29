@@ -30,6 +30,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Reggae+One&family=Zen+Kurenaido&display=swap"
           rel="stylesheet"
         />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=nature_people" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

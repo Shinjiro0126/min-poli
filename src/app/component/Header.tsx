@@ -34,12 +34,12 @@ export default function Header() {
 
             {/* PC用 ログイン/新規登録 */}
             <div className="hidden md:flex items-center space-x-4">
-              <a href="#" className="text-gray-700 hover:text-indigo-600">
+              <a href="#" className="text-gray-700 hover:text-primary-700">
                 ログイン
               </a>
               <a
                 href="#"
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+                className="inline-flex items-center rounded-md bg-primary-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-900"
               >
                 新規登録
               </a>
@@ -86,7 +86,7 @@ export default function Header() {
 
       {/* モバイル用メニュー（開閉制御） */}
       {isOpen && (
-        <div className="fixed inset-0 z-40 flex justify-end pt-16 lg:static lg:inset-auto lg:justify-end border-gray-200">
+        <div className="fixed inset-0 z-45 flex justify-end pt-16 lg:static lg:inset-auto lg:justify-end border-gray-200">
           <div className="w-full max-w-xs bg-white shadow-lg p-6 lg:w-64">
             <div className="flex flex-col space-y-4">
               <a
