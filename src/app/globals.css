@@ -124,7 +124,7 @@
 
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -141,10 +141,10 @@
       --primary-900: #0f524b;
       --primary-950: #01322f;
   }
-}
+} */
 
 body {
-  background: var(--background);
+  /* background: var(--background); */
   color: var(--foreground);
   font-family: var(--font-family);
 }

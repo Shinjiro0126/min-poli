@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,38 +13,38 @@ export default function Header() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             {/* ロゴとタイトル */}
-            <div className="flex items-center">
-              <img
+            <Link href="/" className="flex items-center">
+              <Image
                 className="h-8 w-auto"
                 src="/img/logo.svg"
-                alt="Your Company"
+                alt="みんなの政治ロゴ"
               />
-              <span className="ml-2 font-semibold text-lg text-background zen-kurenaido-regular">
+              <span className="ml-2 font-semibold text-lg zen-kurenaido-regular">
                 みんなの政治
               </span>
-            </div>
+            </Link>
 
             {/* PC用ナビゲーション */}
             <div className="hidden md:flex space-x-4">
-              <a href="#" className="text-gray-700 hover:text-indigo-600">
+              <Link href="#" className="text-gray-700 hover:text-indigo-600">
                 政治を知る
-              </a>
-              <a href="#" className="text-gray-700 hover:text-indigo-600">
+              </Link>
+              <Link href="#" className="text-gray-700 hover:text-indigo-600">
                 政治広場に行く
-              </a>
+              </Link>
             </div>
 
             {/* PC用 ログイン/新規登録 */}
             <div className="hidden md:flex items-center space-x-4">
-              <a href="#" className="text-gray-700 hover:text-primary-700">
+              <Link href="#" className="text-gray-700 hover:text-primary-700">
                 ログイン
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="inline-flex items-center rounded-md bg-primary-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-900"
               >
                 新規登録
-              </a>
+              </Link>
             </div>
 
             {/* ハンバーガーボタン（モバイル用） */}
@@ -89,27 +91,27 @@ export default function Header() {
         <div className="fixed inset-0 z-45 flex justify-end pt-16 lg:static lg:inset-auto lg:justify-end border-gray-200">
           <div className="w-full max-w-xs bg-white shadow-lg p-6 lg:w-64">
             <div className="flex flex-col space-y-4">
-              <a
+              <Link
                 href="#"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
               >
                 政治を知る
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
               >
                 政策広場へ
-              </a>
+              </Link>
             </div>
 
             <div className="mt-6 border-t border-gray-200 pt-4">
-              <a
+              <Link
                 href="#"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
               >
                 ログイン
-              </a>
+              </Link>
             </div>
           </div>
         </div>

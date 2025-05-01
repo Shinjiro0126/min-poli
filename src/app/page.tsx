@@ -15,7 +15,7 @@ export default function Home() {
       <main className="flex flex-col items-center justify-center w-full">
         <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-2 gap-4 w-full xl:w-1/2">
           <a
-            href="#"
+            href="/know"
             className="px-6 py-4 rounded-md bg-white text-primary-700 hover:text-white font-semibold text-lg hover:bg-primary-700 border border-primary-700 text-center"
           >
             <MdMenuBook className="inline text-6xl sm:text-8xl" />
