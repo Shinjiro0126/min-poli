@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/app/component/Header";
+import "@/app/globals.css";
 
 import {
   geistSans,

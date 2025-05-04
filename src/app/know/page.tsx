@@ -9,7 +9,7 @@ export default function Know() {
   return (
     <>
       <main className="pt-16">
-        <div className="max-w-7xl mx-auto pt-12 px-4">
+        <div className="max-w-7xl mx-auto pt-12 px-4 mb-12">
           <Breadcrumb segments={breadcrumbData} />
 
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-6">
@@ -27,7 +27,14 @@ export default function Know() {
                     <span className="text-stone-500 font-caption">2時間前</span>
                   </div>
                   <div className="w-full sm:min-w-40 sm:max-w-50 flex justify-end items-center">
-                    <Image src="https://i.ytimg.com/vi/oJQZf2cX6_Q/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLC47jvsFad1xTjvTsvEqs8xus9Kcw" alt="title" className="aspect-video w-full rounded-lg" />
+                    <div className="aspect-video w-full rounded-lg overflow-hidden relative">
+                      <Image
+                        src="https://i.ytimg.com/vi/oJQZf2cX6_Q/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLC47jvsFad1xTjvTsvEqs8xus9Kcw"
+                        alt="title"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -40,7 +47,15 @@ export default function Know() {
                     <span className="text-stone-500 font-caption">4日前</span>
                   </div>
                   <div className="w-full sm:min-w-40 sm:max-w-50 flex justify-end items-center">
-                    <Image src="https://i.ytimg.com/vi/3HkSt_zJJo4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDyauSncUkeG-2GvJ_dpRwEzF_MYQ" alt="title" className="aspect-video w-full rounded-lg" />
+                    {/* <Image src="https://i.ytimg.com/vi/3HkSt_zJJo4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDyauSncUkeG-2GvJ_dpRwEzF_MYQ" alt="title" className="aspect-video w-full rounded-lg" /> */}
+                    <div className="aspect-video w-full rounded-lg overflow-hidden relative">
+                      <Image
+                        src="https://i.ytimg.com/vi/3HkSt_zJJo4/hqdefault.jpg?sqp=-oaymwEnCOADEI4CSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDyauSncUkeG-2GvJ_dpRwEzF_MYQ"
+                        alt="title"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -53,7 +68,15 @@ export default function Know() {
                     <span className="text-stone-500 font-caption">7日前</span>
                   </div>
                   <div className="w-full sm:min-w-40 sm:max-w-50 flex justify-end items-center">
-                    <Image src="https://i.ytimg.com/vi/BDsSQSxEZf4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBskcpdcPsuy7p-9pvPgZBI5GBETw" alt="title" className="aspect-video w-full rounded-lg" />
+                    {/* <Image src="https://i.ytimg.com/vi/BDsSQSxEZf4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBskcpdcPsuy7p-9pvPgZBI5GBETw" alt="title" className="aspect-video w-full rounded-lg" /> */}
+                    <div className="aspect-video w-full rounded-lg overflow-hidden relative">
+                      <Image
+                        src="https://i.ytimg.com/vi/BDsSQSxEZf4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBskcpdcPsuy7p-9pvPgZBI5GBETw"
+                        alt="title"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -66,7 +89,15 @@ export default function Know() {
                     <span className="text-stone-500 font-caption">3日前</span>
                   </div>
                   <div className="w-full sm:min-w-40 sm:max-w-50 flex justify-end items-center">
-                    <Image src="https://i.ytimg.com/vi/f_bdZa5A-UI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDM0jHsrG9jKTW9Go0lCC_ZAqwbJw" alt="title" className="aspect-video w-full rounded-lg" />
+                    {/* <Image src="https://i.ytimg.com/vi/f_bdZa5A-UI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDM0jHsrG9jKTW9Go0lCC_ZAqwbJw" alt="title" className="aspect-video w-full rounded-lg" /> */}
+                    <div className="aspect-video w-full rounded-lg overflow-hidden relative">
+                      <Image
+                        src="https://i.ytimg.com/vi/f_bdZa5A-UI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDM0jHsrG9jKTW9Go0lCC_ZAqwbJw"
+                        alt="title"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -79,7 +110,15 @@ export default function Know() {
                     <span className="text-stone-500 font-caption">9日前</span>
                   </div>
                   <div className="w-full sm:min-w-40 sm:max-w-50 flex justify-end items-center">
-                    <Image src="https://i.ytimg.com/vi/tAhAIrJbvAM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBOBRmi5G0Vh08Zid3W0tndCyzXJg" alt="title" className="aspect-video w-full rounded-lg" />
+                    {/* <Image src="https://i.ytimg.com/vi/tAhAIrJbvAM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBOBRmi5G0Vh08Zid3W0tndCyzXJg" alt="title" className="aspect-video w-full rounded-lg" /> */}
+                    <div className="aspect-video w-full rounded-lg overflow-hidden relative">
+                      <Image
+                        src="https://i.ytimg.com/vi/tAhAIrJbvAM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBOBRmi5G0Vh08Zid3W0tndCyzXJg"
+                        alt="title"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
 

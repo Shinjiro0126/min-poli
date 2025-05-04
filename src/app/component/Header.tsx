@@ -18,6 +18,8 @@ export default function Header() {
                 className="h-8 w-auto"
                 src="/img/logo.svg"
                 alt="みんなの政治ロゴ"
+                width={120}
+                height={40}
               />
               <span className="ml-2 font-semibold text-lg zen-kurenaido-regular">
                 みんなの政治
