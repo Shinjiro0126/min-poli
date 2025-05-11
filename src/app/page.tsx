@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MdMenuBook } from "react-icons/md";
 
 export default function Home() {
@@ -14,22 +15,22 @@ export default function Home() {
         >
       <main className="flex flex-col items-center justify-center w-full">
         <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-2 gap-4 w-full xl:w-1/2">
-          <a
+          <Link
             href="/know"
             className="px-6 py-4 rounded-md bg-white text-primary-700 hover:text-white font-semibold text-lg hover:bg-primary-700 border border-primary-700 text-center"
           >
             <MdMenuBook className="inline text-6xl sm:text-8xl" />
             <h4 className="mt-6">政治を知る</h4>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/park"
             className="px-6 py-4 rounded-md bg-white text-primary-700 hover:text-white font-semibold text-lg hover:bg-primary-700 border border-primary-700 text-center"
           >
               <span className="material-symbols-outlined inline !text-6xl sm:!text-8xl">
                 nature_people
               </span>
             <h4 className="mt-6">政策広場へ行く</h4>
-          </a>
+          </Link>
         </div>
       </main>
     </div>

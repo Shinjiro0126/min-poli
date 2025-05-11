@@ -31,7 +31,7 @@ export default function Header() {
               <Link href="/know" className="text-gray-700 hover:text-indigo-600">
                 政治を知る
               </Link>
-              <Link href="#" className="text-gray-700 hover:text-indigo-600">
+              <Link href="/park" className="text-gray-700 hover:text-indigo-600">
                 政治広場に行く
               </Link>
             </div>
