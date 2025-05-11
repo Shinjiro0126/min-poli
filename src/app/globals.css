@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Reggae+One&family=Zen+Kurenaido&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Reggae+One&family=Stick&display=swap');
 
 :root {
   --background: #ffffff;
@@ -203,4 +204,10 @@ h6 {
 
 .font-overline {
   @apply text-[12px] font-bold;
+}
+
+.reggae-one-regular {
+  font-family: "Reggae One", system-ui;
+  font-weight: 100;
+  font-style: normal;
 }
