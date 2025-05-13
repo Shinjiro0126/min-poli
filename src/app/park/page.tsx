@@ -1,9 +1,8 @@
 import Breadcrumb from "@/app/component/Breadcrumb";
-import ParkChart from "../component/ParkChart";
+import ParkChart from "../component/park/ParkChart";
 import UserVoiceList from "./component/UserVoiceList";
-import { UserVoice } from "./types/userVoice";
 
-export default function ParkPage() {
+export default async function ParkPage() {
   const breadcrumbData = [
     {path: "", label: "政策広場"}
   ];
@@ -18,6 +17,14 @@ export default function ParkPage() {
     { name: "参政党", value: 1, color: "#E26632" },
     { name: "その他", value: 1, color: "#B0B0B0" },
   ];
+
+  type UserVoice = {
+    id: number,
+    userName: string,
+    timeAgo: string,
+    partyLogo: string,
+    content: string,
+  }
 
   // ユーザーの声のデータ
   const userVoices: UserVoice[] = [

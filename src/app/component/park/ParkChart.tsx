@@ -1,7 +1,7 @@
 'use client';
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import ParkChartTooltip from "./ParkChartTooltip";
+import ParkChartTooltip from "@/app/component/park/ParkChartTooltip";
 
 type DataType = {
   name: string;
