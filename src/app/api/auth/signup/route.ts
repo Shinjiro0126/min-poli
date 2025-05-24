@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase/supabeseClinent";
+import { supabase } from "@/lib/supabase/supabeseClient";
 import bcrypt from "bcrypt";
 import { formatToJST } from "@/util/timestamp_jp";
 

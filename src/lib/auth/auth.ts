@@ -2,7 +2,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { supabase } from "@/lib/supabase/supabeseClinent";
+import { supabase } from "@/lib/supabase/supabeseClient";
 import bcrypt from "bcrypt";
 import { formatToJST } from "@/util/timestamp_jp";
 
