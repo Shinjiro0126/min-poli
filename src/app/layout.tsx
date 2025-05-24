@@ -5,8 +5,10 @@ import "@/app/globals.css";
 import {
   geistSans,
   geistMono,
+  reggaeOne,
+  zenKurenaido,
 } from './fonts';
-
+import Providers from "./providers";
 
 
 export const metadata: Metadata = {
@@ -21,18 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Reggae+One&family=Zen+Kurenaido&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=nature_people" />
-      </head>
+      <head />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-stone-50`}
+        className={`${reggaeOne.variable} ${zenKurenaido.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-stone-50`}
       >
-        <Header />
-        {children}
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

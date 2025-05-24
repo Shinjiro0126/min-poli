@@ -3,7 +3,7 @@ import { DVideoListItem, DVideo } from '@/types/dvideo/dvideo';
 
 export async function getDVideos(): Promise<DVideoListItem[]> {
   const { data, error } = await supabase
-    .from('dvideo')
+    .from('d_video')
     .select(`
       id,
       video_id,
@@ -17,7 +17,7 @@ export async function getDVideos(): Promise<DVideoListItem[]> {
     .order('published_at', { ascending: false });
 
   if (error) {
-    console.error('Error fetching dvideos:', error);
+    console.error('Error fetching d_videos:', error);
     return [];
   }
 
@@ -26,7 +26,7 @@ export async function getDVideos(): Promise<DVideoListItem[]> {
 
 export async function getDVideoById(id: string): Promise<DVideo | null> {
   const { data, error } = await supabase
-    .from('dvideo')
+    .from('d_video')
     .select('*')
     .eq('id', id)
     .single();
