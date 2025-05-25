@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MdHandshake } from "react-icons/md";
-import Avatar from "@/app/component/Avatar";
+// import Avatar from "@/app/component/Avatar";
 import {getRelativeTimeString} from "@/util/date";
 import { FaUserCircle } from "react-icons/fa";
 
