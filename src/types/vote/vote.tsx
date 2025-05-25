@@ -30,3 +30,16 @@ export interface TVotePeriodParty {
   vote_period_id: number;
   party_id: number;
 }
+
+export interface VVote {
+  vote_id: number;
+  vote_period_id: number;
+  user_id: string;
+  user_name: string;
+  party_id: number;
+  party_name: string;
+  party_abbreviation: string;
+  party_logo_url: string;
+  comment: string;
+  voted_at: string;  // ISO8601 形式または "YYYY-MM-DD HH:MM:SS" など文字列
+}

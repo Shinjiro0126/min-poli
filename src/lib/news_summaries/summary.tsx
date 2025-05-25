@@ -6,8 +6,6 @@ export async function getLatestNewsSummary(): Promise<NewsSummary | null>{
   today.setHours(today.getHours() + 9); // JSTに変換
   today.setHours(23, 59, 59, 999); // JSTの終端
 
-  console.log(today);
-
   const { data, error } = await supabase
     .from('news_summaries')
     .select('*')

@@ -1,55 +1,44 @@
 import Breadcrumb from "@/app/component/Breadcrumb";
 import ParkChart from "../component/park/ParkChart";
 import UserVoiceList from "./component/UserVoiceList";
+import { getCurrentPeriodVotes } from "@/lib/vote/vote";
+import { getAllParties } from "@/lib/party/party";
+import type { VVote } from "@/types/vote/vote";
+import type { MParty } from "@/types/party/party";
 
 export default async function ParkPage() {
   const breadcrumbData = [
     {path: "", label: "政策広場"}
   ];
 
-  const data = [
-    { name: "自民党", value: 45, color: "#DA4544" },
-    { name: "立憲民主党", value: 30, color: "#004097" },
-    { name: "維新", value: 10, color: "#3C9641" },
-    { name: "国民民主", value: 8, color: "#112C73" },
-    { name: "れいわ新選組", value: 4, color: "#E61785" },
-    { name: "共産党", value: 1, color: "#E8161E" },
-    { name: "参政党", value: 1, color: "#E26632" },
-    { name: "その他", value: 1, color: "#B0B0B0" },
-  ];
+  const votes: VVote[] = await getCurrentPeriodVotes();
+  const parties: MParty[] = await getAllParties();
 
-  type UserVoice = {
-    id: number,
-    userName: string,
-    timeAgo: string,
-    partyLogo: string,
-    content: string,
+  const counts = votes.reduce((map, v) => {
+    map.set(v.party_id, (map.get(v.party_id) ?? 0) + 1);
+    return map;
+  }, new Map<number, number>());
+
+  const chartData = parties.map((p) => ({
+    name: p.abbreviation,
+    value: counts.get(p.party_id) ?? 0,
+    color: p.color_code,
+  }));
+
+  const knownIds = new Set(parties.map((p) => p.party_id));
+  const otherCount = votes.filter((v) => !knownIds.has(v.party_id)).length;
+  if (otherCount > 0) {
+    chartData.push({ name: "その他", value: otherCount, color: "#B0B0B0" });
   }
 
-  // ユーザーの声のデータ
-  const userVoices: UserVoice[] = [
-    {
-      id: 1,
-      userName: "ユーザー1",
-      timeAgo: "3時間前",
-      partyLogo: "/img/party/jimin.svg",
-      content: "物価高への対策や経済成長戦略に具体性があって信頼できると感じました。"
-    },
-    {
-      id: 2,
-      userName: "ユーザー2",
-      timeAgo: "5時間前",
-      partyLogo: "/img/party/rikkenminsyu.svg",
-      content: "社会保障の充実と格差是正の政策に共感しました。"
-    },
-    {
-      id: 3,
-      userName: "ユーザー3",
-      timeAgo: "1日前",
-      partyLogo: "/img/party/ishin.svg",
-      content: "行政改革と規制緩和の姿勢が評価できます。"
-    }
-  ];
+
+  const userVoices = votes.map((v) => ({
+    id: v.vote_id,
+    userName: v.user_name ?? "匿名",
+    timeAgo: v.voted_at,
+    partyLogo: `/img/party/${v.party_logo_url}`,
+    content: v.comment ?? "",
+  }));
 
   return (
     <>
@@ -65,7 +54,7 @@ export default async function ParkPage() {
                   <h4 className="mb-4">第1回みんなの投票結果</h4>
                   <h4 className="mb-4">自民党</h4>
                 </div>
-                <ParkChart data={data} />
+                <ParkChart data={chartData} />
               </div>
 
               {/* みんなの声 */}
