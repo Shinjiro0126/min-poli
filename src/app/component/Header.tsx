@@ -45,10 +45,10 @@ export default function Header() {
 
             {/* PC用ナビゲーション */}
             <div className="hidden md:flex space-x-4">
-              <Link href="/know" className="text-gray-700 hover:text-indigo-600">
+              <Link href="/know" className="text-gray-700 hover:text-primary-700">
                 政治を知る
               </Link>
-              <Link href="/park" className="text-gray-700 hover:text-indigo-600">
+              <Link href="/worksheet" className="text-gray-700 hover:text-primary-700">
                 政治広場に行く
               </Link>
             </div>

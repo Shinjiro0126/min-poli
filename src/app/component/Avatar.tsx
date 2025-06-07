@@ -5,13 +5,14 @@ interface AvatarProps {
   alt: string;
   width?: number;
   height?: number;
+  className?: string;
 }
 
-export default function Avatar({ src, alt, width = 40, height = 40 }: AvatarProps) {
+export default function Avatar({ src, alt, width = 40, height = 40, className = "" }: AvatarProps) {
   return (
-    <div className="w-10 h-10 rounded-full border-2 border-stone-50">
+    <div className="w-10 h-10 rounded-full border-1 border-stone-300">
       <Image
-        className="object-cover"
+        className={`object-cover ${className}`}
         src={src}
         alt={alt}
         width={width}

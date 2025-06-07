@@ -175,11 +175,11 @@ h6 {
 }
 
 .font-sub-title1 {
-  @apply text-[20px] font-normal;
+  @apply text-[20px] font-bold;
 }
 
 .font-sub-title2 {
-  @apply text-[16px] font-normal;
+  @apply text-[16px] font-bold;
 }
 
 .font-body {
