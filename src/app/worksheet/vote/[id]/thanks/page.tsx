@@ -44,8 +44,6 @@ export default async function WorkSheetVoteThanksPage({ params }: Props) {
           <Button href={`/worksheet/${id}`} className="bg-primary-700 hover:bg-primary-900 block w-full shadow-lg text-white py-3">
             投票結果を確認する
           </Button>
-
-
         </div>
       </main>
     </>
