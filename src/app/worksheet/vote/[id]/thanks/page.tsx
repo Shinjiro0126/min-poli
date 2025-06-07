@@ -1,8 +1,6 @@
-import Breadcrumb from "@/app/component/Breadcrumb";
 import React from 'react';
 import Button from "@/app/component/Button";
 import Image from "next/image";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface Props {
   params: Promise<{ id: number }>;

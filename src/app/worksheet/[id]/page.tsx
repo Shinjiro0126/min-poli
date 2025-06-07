@@ -1,5 +1,5 @@
 import Breadcrumb from "@/app/component/Breadcrumb";
-import React, { Children } from 'react';
+import React from 'react';
 import WorksheetChart from "@/app/component/worksheet/WorkSheetChart";
 import Card from "@/app/component/Card";
 import Avatar from "@/app/component/Avatar";
@@ -122,7 +122,7 @@ function getPercentageDate() {
   const total = data.reduce((acc, curr) => acc + curr.value, 0);
 
   // まず小数点第2位まで計算
-  let temp = data.map(item => ({
+  const temp = data.map(item => ({
     ...item,
     percent: Math.round((item.value / total) * 1000) / 10 // 小数点1位
   }));
