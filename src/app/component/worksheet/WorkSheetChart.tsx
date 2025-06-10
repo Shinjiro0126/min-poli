@@ -13,7 +13,7 @@ type Props = {
 };
 
 const barColors = {
-  selected: "bg-primary-600", // 赤系
+  selected: "bg-primary-500", // 赤系
   normal: "bg-stone-300", // 青系
 };
 
@@ -43,7 +43,7 @@ class WorksheetChart extends React.Component<Props> {
               className="absolute left-4 top-0 h-10 flex items-center font-semibold text-white text-base whitespace-nowrap overflow-hidden text-ellipsis z-10 max-w-[calc(100%-80px)] pointer-events-none"
             >
               <span
-                className="whitespace-nowrap overflow-hidden text-ellipsis max-w-full inline-block text-gray-900"
+                className="whitespace-nowrap overflow-hidden text-ellipsis max-w-full inline-block text-gray-800"
               >
                 {item.label}
               </span>

@@ -26,12 +26,12 @@ export default async function WorkSheet() {
             {/* 政党投票 */}
             <div className="w-full mb-12">
               <h4 className="mb-3">政党投票</h4>
-              <div className="flex flex-nowrap gap-2 sm:gap-4 overflow-auto h-[25vh] min-h-40">
+              <div className="flex flex-nowrap gap-2 sm:gap-4 overflow-x-auto">
                 {politicalPartyWorksheets.map((worksheet) => (
                   <Link
                     key={worksheet.worksheet_id}
                     href={`/worksheet/${worksheet.worksheet_id}`}
-                    className="aspect-video flex-shrink-0 rounded-lg overflow-hidden relative group"
+                    className="aspect-video flex-shrink-0 rounded-lg overflow-hidden relative group min-w-[50%] md:min-w-[33.333%] xl:min-w-[25%]"
                   >
                     <Image
                       src={`/img/worksheet/${worksheet.thumbnail_url || "202506.png"}`}

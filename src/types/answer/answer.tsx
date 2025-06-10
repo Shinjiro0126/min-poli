@@ -35,3 +35,25 @@ export interface TAnswer {
   created_at?: string | null; // timestamp with time zone, ISO8601文字列, default now()
   updated_at?: string | null; // timestamp with time zone, ISO8601文字列, default now()
 }
+
+// RPCファンクション get_answers_with_user_flag の戻り値の型
+export interface WorksheetAnswerWithUserFlag {
+  worksheet_id: number;
+  no: number;
+  answer_text: string;
+  count: number;
+  is_answer: boolean;
+  sort?: number | null;
+}
+
+// v_answerビューの型
+export interface VAnswer {
+  user_id: string;
+  worksheet_id: number;
+  no: number;
+  reason?: string | null;
+  is_active?: boolean | null;
+  created_at?: string | null;
+  updated_at?: string | null;
+  answer_text: string;
+}

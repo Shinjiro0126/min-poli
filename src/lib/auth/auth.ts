@@ -1,5 +1,5 @@
 // pages/api/auth/[...nextauth].ts
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { supabase } from "@/lib/supabase/supabeseClient";
@@ -115,16 +115,45 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async jwt({ token, user }) {
-      if (user) token.user = user;
+    async jwt({ token, user, account }) {
+      // 初回ログイン時のみ実行（accountが存在する場合）
+      if (account) {
+        if(account.provider === "google" && user?.email){
+          console.log("Processing Google login for email:", user.email);
+          
+          const {data: dbUser, error } = await supabase
+            .from("d_users")
+            .select("user_id, email")
+            .eq("email", user.email)
+            .eq("auth_provider", "google")
+            .single();
+
+          if(dbUser && !error){
+            token.user = {
+              id: dbUser.user_id,
+              email: dbUser.email,
+              image: user.image,
+            };
+            console.log("JWT: Set user from database:", token.user);
+          } else {
+            console.error("JWT: Failed to get user from database:", error);
+          }
+        } else if(user){
+          // Credentials認証の場合
+          token.user = user;
+          console.log("JWT: Set credentials user:", token.user);
+        }
+      }
+      // 2回目以降は既存のtokenをそのまま返す（DBクエリなし）
+
       return token;
     },
     async session({ session, token }) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      session.user = token.user as any;
+      if(token.user){
+        session.user = token.user as { id: string; name?: string; email?: string; image?: string };
+      }
+
       return session;
     },
   },
 };
-
-export default NextAuth(authOptions);

@@ -64,7 +64,6 @@ export default function VoteForm({
         userId={userId}
         selectedValue={selectedValue}
         reason={reason}
-        className="bg-primary-700 hover:bg-primary-900 block w-full shadow-lg text-white py-3"
       />
     </>
   );

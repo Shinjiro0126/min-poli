@@ -1,17 +1,13 @@
 // src/lib/answer/answer.tsx
 import { supabase } from '@/lib/supabase/supabeseClient';
-import { MWorksheet, MWorksheetAnswer, TAnswer } from '@/types/answer/answer';
+import { MWorksheet, MWorksheetAnswer, TAnswer, WorksheetAnswerWithUserFlag, VAnswer } from '@/types/answer/answer';
 
 export async function getWorksheetsByCategory(categoryTy: number): Promise<MWorksheet[]> {
-  const currenDate = new Date().toISOString();
-
   const { data, error } = await supabase
     .from('m_worksheet')
     .select('*')
     .eq('category_ty', categoryTy)
     .eq('is_active', true)
-    .lte('start_at', currenDate)
-    .or(`end_at.is.null, end_at.gte.${currenDate}`)
     .order('sort', { ascending: true });
   
   if (error) {
@@ -27,24 +23,29 @@ export async function getUserAnswer(worksheetId: number, userId: string | null):
     return null;
   }
 
-  const { data, error } = await supabase
-    .from('t_answer')
-    .select('*')
-    .eq('worksheet_id', worksheetId)
-    .eq('user_id', userId)
-    .eq('is_active', true)
-    .single();
-  
-  if (error) {
-    if (error.code === 'PGRST116') {
-      // データが見つからない場合
+  try {
+    const { data, error } = await supabase
+      .from('t_answer')
+      .select('*')
+      .eq('worksheet_id', worksheetId)
+      .eq('user_id', userId)
+      .eq('is_active', true)
+      .single();
+    
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // データが見つからない場合
+        return null;
+      }
+      console.error('Error fetching user answer:', error);
       return null;
     }
+    
+    return data;
+  } catch (error) {
     console.error('Error fetching user answer:', error);
     return null;
   }
-  
-  return data;
 }
 
 export async function getWorksheetAnswers(worksheetId: number): Promise<MWorksheetAnswer[]> {
@@ -105,4 +106,76 @@ const currenDate = new Date().toISOString();
   }
   
   return data;
+}
+
+export async function getWorksheetAnswersResult(worksheetId: number, userId: string | null): Promise<WorksheetAnswerWithUserFlag[]> {
+  const { data, error } = await supabase
+    .rpc('get_answers_with_user_flag', {
+      p_user_id: userId,
+      p_worksheet_id: worksheetId
+    })
+  
+  if (error) {
+    console.error('Error fetching worksheet answers:', error);
+    return [];
+  }
+  
+  if (!data || data.length === 0) {
+    return [];
+  }
+
+  return data;
+}
+
+export async function getVUserAnswer(worksheetId: number, userId: string | null): Promise<VAnswer | null> {
+  if (!userId || userId === "") {
+    return null;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('v_answer')
+      .select('*')
+      .eq('worksheet_id', worksheetId)
+      .eq('user_id', userId)
+      .eq('is_active', true)
+      .single();
+    
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // データが見つからない場合
+        return null;
+      }
+      console.error('Error fetching user answer from v_answer:', error);
+      return null;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error fetching user answer from v_answer:', error);
+    return null;
+  }
+}
+
+export async function getAllAnswers(worksheetId: number, currentUserId: string | null): Promise<VAnswer[]> {
+  try {
+    const { data, error } = await supabase
+      .from('v_answer')
+      .select('*')
+      .eq('worksheet_id', worksheetId)
+      .neq('user_id', currentUserId || '') // 自分以外のユーザー
+      .eq('is_active', true)
+      .not('reason', 'is', null) // reasonがnullでないもの
+      .order('created_at', { ascending: false }); // 新しい順に並べる
+    
+    if (error) {
+      console.error('Error fetching all answers:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Error fetching all answers:', error);
+    return [];
+  }
 }

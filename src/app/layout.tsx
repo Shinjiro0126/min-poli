@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/app/component/Header";
+import Providers from "./providers";
 import "@/app/globals.css";
 
 import {
@@ -8,7 +9,6 @@ import {
   reggaeOne,
   zenKurenaido,
 } from './fonts';
-import Providers from "./providers";
 
 
 export const metadata: Metadata = {

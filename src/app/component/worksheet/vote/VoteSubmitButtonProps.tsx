@@ -12,7 +12,6 @@ type VoteSubmitButtonProps = {
   userId: string;
   selectedValue: string | null;
   reason?: string;
-  className?: string;
 }
 
 export default function VoteSubmitButton({
@@ -20,7 +19,6 @@ export default function VoteSubmitButton({
   userId,
   selectedValue,
   reason = "",
-  className = "",
 }: VoteSubmitButtonProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,18 +88,27 @@ export default function VoteSubmitButton({
   }
 
   return (
-    <Button
-    onClick={handleSubmit}
-    disabled={isSubmitting || !selectedValue}
-    className={`bg-primary-700 hover:bg-primary-900 block w-full shadow-lg text-white py-3 ${className}`}>
-      {isSubmitting ? (
-        <span className="flex items-center justify-center">
-                      <AiOutlineLoading3Quarters className="mr-3 size-5 animate-spin" />
-                      <span>投票中...</span>
-                    </span>
-      ) : (
-        "投票して結果を見る"
-      )}
-    </Button>
+    <div className="flex flex-col sm:flex-row gap-3 mb-4">
+      <Button
+              onClick={() => router.push(`/worksheet/vote/${worksheetId}`)}
+              disabled={isSubmitting}
+              className="bg-gray-500 hover:bg-gray-700 flex-1 text-white py-3 order-1 sm:order-0"
+            >
+              キャンセル
+            </Button>
+      <Button
+      onClick={handleSubmit}
+      disabled={isSubmitting || !selectedValue}
+      className={`bg-primary-700 hover:bg-primary-900 flex-1 text-white py-3 order-0 sm:order-1`}>
+        {isSubmitting ? (
+          <span className="flex items-center justify-center">
+                        <AiOutlineLoading3Quarters className="mr-3 size-5 animate-spin" />
+                        <span>投票中...</span>
+                      </span>
+        ) : (
+          "投票して結果を見る"
+        )}
+      </Button>
+    </div>
   );
 }
