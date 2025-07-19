@@ -1,6 +1,6 @@
 // src/lib/answer/answer.tsx
 import { supabase } from '@/lib/supabase/supabeseClient';
-import { MWorksheet, MWorksheetAnswer, TAnswer, WorksheetAnswerWithUserFlag, VAnswer } from '@/types/answer/answer';
+import { MWorksheet, WorksheetWithAnswerStatus, MWorksheetAnswer, TAnswer, WorksheetAnswerWithUserFlag, VAnswer } from '@/types/answer/answer';
 
 export async function getWorksheetsByCategory(categoryTy: number): Promise<MWorksheet[]> {
   const { data, error } = await supabase
@@ -16,6 +16,24 @@ export async function getWorksheetsByCategory(categoryTy: number): Promise<MWork
   }
   
   return data || [];
+}
+
+export async function getWorkSheetsWithAnswerStatus(userId: string | null): Promise<WorksheetWithAnswerStatus[]> {
+  const { data, error } = await supabase
+    .rpc('get_worksheets_with_answer_status', {
+      p_user_id: userId,
+    })
+  
+  if (error) {
+    console.error('Error fetching worksheet answers:', error);
+    return [];
+  }
+  
+  if (!data || data.length === 0) {
+    return [];
+  }
+
+  return data;
 }
 
 export async function getUserAnswer(worksheetId: number, userId: string | null): Promise<TAnswer | null> {
@@ -178,4 +196,12 @@ export async function getAllAnswers(worksheetId: number, currentUserId: string |
     console.error('Error fetching all answers:', error);
     return [];
   }
+}
+
+// カテゴリ別にワークシートを分割するヘルパー関数
+export function filterWorksheetsByCategory(
+  worksheets: WorksheetWithAnswerStatus[],
+  categoryTy: number
+): WorksheetWithAnswerStatus[] {
+  return worksheets.filter(worksheet => worksheet.category_ty === categoryTy);
 }

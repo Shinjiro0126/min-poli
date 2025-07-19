@@ -45,11 +45,11 @@ export default function Header() {
 
             {/* PC用ナビゲーション */}
             <div className="hidden md:flex space-x-4">
-              <Link href="/know" className="text-gray-700 hover:text-primary-700">
-                政治を知る
+              <Link href="/" className="text-gray-700 hover:text-primary-700">
+                今日のテーマ
               </Link>
               <Link href="/worksheet" className="text-gray-700 hover:text-primary-700">
-                政治広場に行く
+                投票一覧
               </Link>
             </div>
 
@@ -147,16 +147,16 @@ export default function Header() {
           <div className="w-full max-w-xs bg-white shadow-lg p-6 lg:w-64">
             <div className="flex flex-col space-y-4">
               <Link
-                href="#"
+                href="/"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
               >
-                政治を知る
+                今日のテーマ
               </Link>
               <Link
-                href="#"
+                href="/worksheet"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
               >
-                政策広場へ
+                投票一覧
               </Link>
             </div>
 
