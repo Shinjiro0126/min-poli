@@ -30,7 +30,7 @@ export default async function EditPage({ params }: Props) {
   }
 
   const breadcrumbData = [
-    { path: "/know", label: "政治を知る" },
+    { path: "/worksheet", label: "投票一覧" },
     { path: `/worksheet/${worksheet_id}`, label: "アンケート結果" },
     { path: `/worksheet/vote/${worksheet_id}/edit`, label: "投票理由編集" }
   ];

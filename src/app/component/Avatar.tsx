@@ -10,14 +10,12 @@ interface AvatarProps {
 
 export default function Avatar({ src, alt, width = 40, height = 40, className = "" }: AvatarProps) {
   return (
-    <div className="w-10 h-10 rounded-full border-1 border-stone-300">
-      <Image
-        className={`object-cover ${className}`}
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-      />
-    </div>
+    <Image
+      className={`rounded-full object-cover ${className}`}
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+    />
   );
 } 

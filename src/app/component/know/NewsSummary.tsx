@@ -1,5 +1,5 @@
 // src/app/component/know/NewsSummary.tsx
-import { NewsSummary } from "@/types/news_summaries/summary";
+import { NewsSummary } from "@/types/summary/summary";
 import { convertNewlinesToBr } from "@/util/text";
 
 interface NewsSummaryProps {

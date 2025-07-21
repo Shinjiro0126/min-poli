@@ -1,13 +1,13 @@
 import { supabase } from "@/lib/supabase";
-import { NewsSummary } from "@/types/news_summaries/summary";
+import { NewsSummary } from "@/types/summary/summary";
 
-export async function getLatestNewsSummary(): Promise<NewsSummary | null>{
+export async function getLatestSummary(): Promise<NewsSummary | null>{
   const today = new Date();
   today.setHours(today.getHours() + 9); // JSTに変換
   today.setHours(23, 59, 59, 999); // JSTの終端
 
   const { data, error } = await supabase
-    .from('news_summaries')
+    .from('t_summaries')
     .select('*')
     .lte('published_date', today.toISOString())
     .order('published_date', { ascending: false })

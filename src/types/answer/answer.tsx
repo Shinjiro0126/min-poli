@@ -8,6 +8,7 @@ export interface MWorksheet {
   description?: string | null; // text, nullable
   thumbnail_url?: string | null; // text, nullable
   question_text: string; // text, NOT NULL
+  interest_score?: number | null; // integer, default 0
   start_at?: string | null; // timestamp with time zone, ISO8601文字列
   end_at?: string | null; // timestamp with time zone, ISO8601文字列
   is_active?: boolean | null; // boolean, default true
@@ -24,6 +25,7 @@ export interface WorksheetWithAnswerStatus {
   description: string;
   thumbnail_url: string;
   question_text: string;
+  interest_score?: number | null; // integer, default 0
   start_at: string;  // ISO 8601 形式の文字列
   end_at: string;    // ISO 8601 形式の文字列
   is_answer: boolean;

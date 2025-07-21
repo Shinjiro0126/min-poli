@@ -25,7 +25,7 @@ export default async function WorkSheetVotePage({ params }: Props) {
   }
 
   const breadcrumbData = [
-    { path: "/worksheet", label: "政策広場" },
+    { path: "/worksheet", label: "投票一覧" },
     { path: `/worksheet/vote/${id}`, label: "アンケート" }
   ];
 

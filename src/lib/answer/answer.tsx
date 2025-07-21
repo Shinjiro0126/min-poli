@@ -198,6 +198,30 @@ export async function getAllAnswers(worksheetId: number, currentUserId: string |
   }
 }
 
+/**
+ * start_atが最新のワークシート1件を取得する（ユーザーの回答状況付き）
+ * @param userId ユーザーID
+ * @returns 最新のワークシート、存在しない場合はnull
+ */
+export async function getLatestWorksheetWithAnswerStatus(userId: string | null): Promise<WorksheetWithAnswerStatus | null> {
+  const { data, error } = await supabase
+    .rpc('get_worksheets_with_answer_status', {
+      p_user_id: userId,
+    })
+  
+  if (error) {
+    console.error('Error fetching latest worksheet:', error);
+    return null;
+  }
+  
+  if (!data || data.length === 0) {
+    return null;
+  }
+
+  // Supabaseファンクション側でstart_atのdesc順になっているので最初の1件を返す
+  return data[0];
+}
+
 // カテゴリ別にワークシートを分割するヘルパー関数
 export function filterWorksheetsByCategory(
   worksheets: WorksheetWithAnswerStatus[],

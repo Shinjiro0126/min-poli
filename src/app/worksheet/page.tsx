@@ -1,5 +1,4 @@
 import Breadcrumb from "@/app/component/Breadcrumb";
-import Link from "next/link";
 import Image from "next/image";
 import { getWorkSheetsWithAnswerStatus, filterWorksheetsByCategory } from "@/lib/answer/answer";
 import { WORKSHEET_CATEGORY } from "@/constans/worksheet";
@@ -13,7 +12,7 @@ import { authOptions } from "@/lib/auth/auth";
 
 export default async function WorkSheet() {
   const breadcrumbData = [
-    {path: "/worksheet", label: "政策広場"}
+    {path: "/worksheet", label: "投票一覧"}
   ];
 
   const session = await getServerSession(authOptions);

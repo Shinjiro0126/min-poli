@@ -1,6 +1,4 @@
-import Link from "next/link";
-import { MdMenuBook } from "react-icons/md";
-import { PiParkFill } from "react-icons/pi";
+
 import Avatar from "./component/Avatar";
 import Card from "./component/Card";
 import Button from "./component/Button";
@@ -9,8 +7,36 @@ import { FaHeartbeat } from "react-icons/fa";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { MdShare } from "react-icons/md";
 import { MdLightbulb } from "react-icons/md";
+import { getRandomAvatarPaths } from "@/util/avator_img";
+import { getLatestWorksheetWithAnswerStatus } from "@/lib/answer/answer";
+import { getLatestSummary } from "@/lib/summary/summary";
+import { calcInterestBoostPercent } from "@/lib/answer/util";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/auth";
 
-export default function Home() {
+export default async function Home() {
+
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id || null;
+
+  // 最新のワークシートを取得
+  const latestWorksheet = await getLatestWorksheetWithAnswerStatus(userId);
+
+  // 最新のニュースサマリーを取得
+  const latestSummary = await getLatestSummary();
+
+  // ランダムなアバター画像を3つ取得
+  const avatarPaths = getRandomAvatarPaths(3);
+
+  // 関心向上率を計算
+  const interestBoostPercent = latestWorksheet && latestWorksheet.start_at 
+    ? calcInterestBoostPercent(
+        latestWorksheet.vote_count || 0,
+        latestWorksheet.start_at,
+        0 // interest_scoreは一時的にデフォルト値を使用
+      )
+    : 53; // デフォルト値
+
   return (
     <>
       <div 
@@ -24,12 +50,18 @@ export default function Home() {
               <p className="mb-6">政治や社会課題について、みんなで考えて意見を共有しよう！</p>
               <div className="flex gap-4 items-center">
                 <div className="flex -space-x-1 overflow-hidden">
-                  <img className="inline-block size-10 rounded-full ring-2 ring-white bg-stone-100 p-1" src="/img/avator/avator1.svg" alt="" />
-                  <img className="inline-block size-10 rounded-full ring-2 ring-white bg-stone-100 p-1" src="/img/avator/avator1.svg" alt="" />
-                  <img className="inline-block size-10 rounded-full ring-2 ring-white bg-stone-100 p-1" src="/img/avator/avator1.svg" alt="" />
+                  {avatarPaths.map((avatarPath, index) => (
+                    <div key={index} className="inline-block rounded-full ring-1 ring-stone-300 bg-stone-50 p-2">
+                      <Avatar 
+                        src={avatarPath} 
+                        alt={`参加者${index + 1}`}
+                        className="rounded-full w-8 h-8"
+                      />
+                    </div>
+                  ))}
                 </div>
                 <div className="font-body-sm">
-                  <span className="font-overline">1000人</span>が参加中
+                  <span className="font-overline">{latestWorksheet?.vote_count || 0}人</span>が参加中
                 </div>
               </div>
             </div>
@@ -39,15 +71,32 @@ export default function Home() {
           <Card className="mb-6 shadow-md">
             <div className="text-center mb-6">
               <div className="text-stone-500 mb-2">今日の投票テーマ</div>
-              <div className="text-primary-700 font-sub-title1 mb-4">教育予算の増額についてどう思いますか？</div>
-              <div>
-                あなたの意見を聞かせてください! 1日1回投票できます。
-              </div>
+              {latestWorksheet ? (
+                <>
+                  <div className="text-primary-700 font-sub-title1 mb-4">{latestWorksheet.title}</div>
+                  <div>
+                    {latestWorksheet.title_message || "あなたの意見を聞かせてください! 1日1回投票できます。"}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="text-primary-700 font-sub-title1 mb-4">現在投票可能なテーマはありません</div>
+                  <div>
+                    新しい投票テーマをお待ちください。
+                  </div>
+                </>
+              )}
             </div>
             <div className="flex justify-center">
-              <Button href="/worksheet/1" className="d-inline-block bg-primary-700 hover:bg-primary-900 text-white py-3 px-4 shadow-md">
-                今すぐ投票する
-              </Button>
+              {latestWorksheet ? (
+                <Button href={`/worksheet/${latestWorksheet.worksheet_id}`} className="d-inline-block bg-primary-700 hover:bg-primary-900 text-white py-3 px-4 shadow-md">
+                  {latestWorksheet.is_answer ? "結果を見る" : "今すぐ投票する"}
+                </Button>
+              ) : (
+                <Button href="/worksheet" className="d-inline-block bg-gray-500 text-white py-3 px-4 shadow-md cursor-not-allowed" disabled>
+                  投票テーマなし
+                </Button>
+              )}
             </div>
             </Card>
 
@@ -56,19 +105,20 @@ export default function Home() {
                 <div className="flex justify-center mb-4">
                   <LuUsers className="text-[44px] text-stone-700" />
                 </div>
-                <h3 className="mb-1">4,320</h3>
+                <h3 className="mb-1">{latestWorksheet?.vote_count || 0}</h3>
                 <p className="text-stone-700 font-body-sm">参加者数</p>
               </Card>
               <Card className="shadow-md text-center">
                 <div className="flex justify-center mb-4">
                   <FaHeartbeat className="text-[44px] text-stone-700" />
                 </div>
-                <h3 className="mb-1">53<span className="font-caption">%</span></h3>
+                <h3 className="mb-1">{interestBoostPercent}<span className="font-caption">%</span></h3>
                 <p className="text-stone-700 font-body-sm">関心向上率</p>
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            {/* 後で実装 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 hidden">
               <Card className="shadow-md">
                 <div className="flex gap-4 items-center mb-2">
                   <MdOutlineCalendarToday className="text-[24px] text-stone-700" />
@@ -97,7 +147,7 @@ export default function Home() {
                   <MdLightbulb className="text-[24px] text-stone-700" />
                   <div>今日の豆知識</div>
                 </div>
-                <p>18歳選挙法は2016年から始まったよ！</p>
+                <p>{latestSummary?.summary || "今日の豆知識はお休みだよ！"}</p>
               </Card>
             </div>
 
