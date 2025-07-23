@@ -122,6 +122,29 @@
   --color-stone-900: #3d3d3d;
   --color-stone-950: #262626;
 
+  --color-orange-50: #fef7ee;
+  --color-orange-100: #feedd6;
+  --color-orange-200: #fbd7ad;
+  --color-orange-300: #f8ba79;
+  --color-orange-400: #f48e3b;
+  --color-orange-500: #f1741e;
+  --color-orange-600: #e25a14;
+  --color-orange-700: #bc4412;
+  --color-orange-800: #953617;
+  --color-orange-900: #782f16;
+  --color-orange-950: #411509;
+
+  --color-pine-green-50: #effefa;
+  --color-pine-green-100: #c9fef1;
+  --color-pine-green-200: #92fde4;
+  --color-pine-green-300: #54f4d5;
+  --color-pine-green-400: #21e0c1;
+  --color-pine-green-500: #08c4a8;
+  --color-pine-green-600: #039e8a;
+  --color-pine-green-700: #077e6f;
+  --color-pine-green-800: #0b645b;
+  --color-pine-green-900: #0f524b;
+  --color-pine-green-950: #01322f;
 
 }
 
@@ -175,11 +198,11 @@ h6 {
 }
 
 .font-sub-title1 {
-  @apply text-[20px] font-normal;
+  @apply text-[20px] font-bold;
 }
 
 .font-sub-title2 {
-  @apply text-[16px] font-normal;
+  @apply text-[16px] font-bold;
 }
 
 .font-body {

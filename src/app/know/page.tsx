@@ -1,7 +1,7 @@
 import Breadcrumb from "@/app/component/Breadcrumb";
 import { getDVideos } from "@/lib/dvideo/dvideos";
 import VideoList from "../component/know/VideoList";
-import { getLatestNewsSummary } from "@/lib/news_summaries/summary";
+import { getLatestSummary } from "@/lib/summary/summary";
 import NewsSummary from "@/app/component/know/NewsSummary"
 
 export default async function KnowPage() {
@@ -11,7 +11,7 @@ export default async function KnowPage() {
   
   const [dvideos, latestNews] = await Promise.all([
     getDVideos(),
-    getLatestNewsSummary()
+    getLatestSummary()
   ]);
 
   return (

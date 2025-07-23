@@ -23,7 +23,7 @@ export default function TextBox({
         id={id}
         aria-invalid={Boolean(error)}
         className={`
-          p-2 h-11 block w-full rounded-md border bg-stone-50 border-stone-200 shadow-xs 
+          p-2 h-11 block w-full rounded-md border bg-stone-50 border-stone-300 shadow-xs 
           focus:border-primary-500 focus:outline focus:outline-primary-500 
           invalid:border-pink-500 invalid:text-pink-600 
           placeholder-shown:invalid:border-stone-200 placeholder-shown:invalid:text-gray-900
