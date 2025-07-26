@@ -1,16 +1,122 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {useSession, signOut} from "next-auth/react";
-import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const {data: session, status} = useSession();
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // 認証状態の表示コンポーネントをメモ化
+  const authDisplayDesktop = useMemo(() => {
+    if (status === "loading") {
+      return (
+        <div className="flex items-center space-x-4">
+          <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+        </div>
+      );
+    }
+    
+    if (session) {
+      return (
+        <div className="relative" ref={menuRef}>
+          <div 
+            className="w-8 h-8 bg-stone-500 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-stone-600 transition-colors"
+            onClick={() => setProfileMenuOpen((o) => !o)}
+          >
+            <span className="font-sub-title1 text-white">
+              {session.user?.name ? session.user.name.charAt(0).toUpperCase() : session.user?.email?.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          {profileMenuOpen && (
+            <div className="absolute top-[calc(100%+8px)] right-0 bg-white border border-stone-300 rounded-md shadow-md divide-y divide-stone-100">
+              <Link
+                href="/user"
+                className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap rounded-md"
+                onClick={() => setProfileMenuOpen(false)}
+              >
+                プロフィール
+              </Link>
+              <Link
+                href="/"
+                className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap rounded-md"
+                onClick={() => {
+                  setProfileMenuOpen(false);
+                  signOut({ callbackUrl: "/" });
+                }}
+              >
+                ログアウト
+              </Link>
+            </div>
+          )}
+        </div>
+      );
+    }
+    
+    return (
+      <>
+        <Link href="/login" className="text-gray-700 hover:text-primary-700">
+          ログイン
+        </Link>
+        <Link
+          href="/signup"
+          className="inline-flex items-center rounded-md bg-primary-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-900"
+        >
+          新規登録
+        </Link>
+      </>
+    );
+  }, [status, session, profileMenuOpen]);
+
+  const authDisplayMobile = useMemo(() => {
+    if (status === "loading") {
+      return (
+        <div className="space-y-2">
+          <div className="w-full h-10 bg-gray-200 rounded-md animate-pulse"></div>
+        </div>
+      );
+    }
+    
+    if (session) {
+      return (
+        <>
+          <Link
+            href="/user"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+          >
+            プロフィール
+          </Link>
+          <button
+            className="block px-3 py-2 rounded-md text-base font-medium text-primary-700 hover:bg-gray-100 hover:text-primary-900"
+            onClick={() => signOut({ callbackUrl: "/" })}
+          >
+            ログアウト
+          </button>
+        </>
+      );
+    }
+    
+    return (
+      <>
+        <Link
+          href="/login"
+          className="block px-3 py-2 rounded-md text-base font-medium text-primary-700 hover:bg-gray-100 hover:text-primary-900"
+        >
+          ログイン
+        </Link>
+        <Link
+          href="/signup"
+          className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+        >
+          新規登録
+        </Link>
+      </>
+    );
+  }, [status, session]);
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent){
@@ -55,51 +161,7 @@ export default function Header() {
 
             {/* PC用 ログイン/新規登録 */}
             <div className="hidden md:flex items-center space-x-4">
-              {status === "loading" ? null : session ? (
-                <div className="relative" ref={menuRef}>
-                  <FaUserCircle
-                    className="text-3xl cursor-pointer text-gray-700 hover:text-primary-700"
-                    onClick={() => setProfileMenuOpen((o) => !o)}
-                  />
-                  {profileMenuOpen && (
-                    <div className="absolute top-[calc(100%+8px)] right-0 bg-white border border-stone-300 rounded-md shadow-md divide-y divide-stone-100">
-                      <Link
-                        href="/profile"
-                        className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap rounded-md"
-                      >
-                        プロフィール
-                      </Link>
-                      <Link
-                        href="/"
-                        className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 whitespace-nowrap rounded-md"
-                        onClick={() => signOut({ callbackUrl: "/" })}
-                      >
-                        ログアウト
-                      </Link>
-                    </div>
-                  )}
-                </div>
-
-                // <button
-                //   className="flex item-center gap-1 rounded-md bg-primary-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-900"
-                //   onClick={() => signOut({ callbackUrl: "/" })}
-                // >
-                //   <MdOutlineLogout className="inline text-2xl" />
-                //   ログアウト
-                // </button>
-              ) : (
-                  <>
-                    <Link href="/login" className="text-gray-700 hover:text-primary-700">
-                      ログイン
-                    </Link>
-                    <Link
-                      href="/signup"
-                      className="inline-flex items-center rounded-md bg-primary-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-900"
-                    >
-                      新規登録
-                    </Link>
-                  </>
-              )}
+              {authDisplayDesktop}
             </div>
 
             {/* ハンバーガーボタン（モバイル用） */}
@@ -149,42 +211,21 @@ export default function Header() {
               <Link
                 href="/"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+                onClick={() => setIsOpen(false)}
               >
                 今日のテーマ
               </Link>
               <Link
                 href="/worksheet"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+                onClick={() => setIsOpen(false)}
               >
                 投票一覧
               </Link>
             </div>
 
             <div className="mt-6 border-t border-gray-200 pt-4">
-              {status === "loading" ? null : session ? (
-                <button
-                className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-primary-700 hover:bg-gray-100 hover:text-primary-900"
-                onClick={() => signOut({ callbackUrl: "/" })}
-                >
-                  <span className="font-caption">ログアウト</span>
-                </button>
-              ) : (
-                <>
-                    <Link
-                      href="/login"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-primary-700 hover:bg-gray-100 hover:text-primary-900"
-                    >
-                      ログイン
-                    </Link>
-                    <Link
-                      href="/signup"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
-                    >
-                      新規登録
-                    </Link>
-                </>
-              )}
-              
+              {authDisplayMobile}
             </div>
           </div>
         </div>
