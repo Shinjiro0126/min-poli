@@ -29,7 +29,7 @@ export default function Login() {
   return (
     <>
       <div 
-        className="grid justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+        className="grid justify-items-center min-h-screen p-2 font-[family-name:var(--font-geist-sans)]"
         style={{
           backgroundImage: 'url("/img/background.svg")',
           backgroundSize: 'cover',
@@ -37,29 +37,33 @@ export default function Login() {
           backgroundPosition: 'center',
         }}
         >
-        <main className="flex flex-col items-center justify-center w-full min-h-screen">
+        <main className="flex flex-col items-center justify-center w-full">
           <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
             <h3 className="mb-10">ログイン</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <TextBox 
-                  id="email"
-                  label="メールアドレス"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.currentTarget.value)}
-                />
-                <TextBox
-                  id="password"
-                  label="パスワード"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
-                />
+                <div className="mb-3">
+                  <TextBox 
+                    id="email"
+                    label="メールアドレス"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.currentTarget.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <TextBox
+                    id="password"
+                    label="パスワード"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.currentTarget.value)}
+                  />
+                </div>
               </div>
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   id="remember"
                   type="checkbox"
@@ -68,7 +72,7 @@ export default function Login() {
                 <label htmlFor="remember" className="ml-2 block text-sm text-gray-900">
                   パスワードを保存
                 </label>
-              </div>
+              </div> */}
               <button
                 type="submit"
                 className="w-full py-2 px-4 bg-primary-700 hover:bg-primary-900 text-white font-semibold rounded-md shadow"

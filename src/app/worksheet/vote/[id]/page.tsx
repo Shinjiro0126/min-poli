@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth/auth";
 import { getUserAnswer, getWorksheetByIdEnabled } from "@/lib/answer/answer";
 import { redirect } from "next/navigation";
 import VoteButton from "@/app/component/worksheet/vote/VoteButton";
+import { getWorksheetImageUrl } from "@/lib/worksheet/worksheet_img";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -54,7 +55,7 @@ export default async function WorkSheetVotePage({ params }: Props) {
           <div className="w-full mb-4">
             <h4 className="mb-3">{worksheet.title}</h4>
             <Image
-              src={`/img/worksheet/${worksheet.thumbnail_url || "202506.png"}`}
+              src={getWorksheetImageUrl(worksheet.thumbnail_url)}
               alt="政党投票"
               width={800}
               height={450}

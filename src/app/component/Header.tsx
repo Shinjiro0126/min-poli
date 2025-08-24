@@ -25,7 +25,7 @@ export default function Header() {
       return (
         <div className="relative" ref={menuRef}>
           <div 
-            className="w-8 h-8 bg-stone-500 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-stone-600 transition-colors"
+            className="w-8 h-8 bg-stone-400 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-stone-600 transition-colors"
             onClick={() => setProfileMenuOpen((o) => !o)}
           >
             <span className="font-sub-title1 text-white">

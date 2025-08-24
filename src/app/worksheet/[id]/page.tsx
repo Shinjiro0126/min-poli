@@ -11,6 +11,7 @@ import { getWorksheetAnswersResult, getWorksheetById, getVUserAnswer, getAllAnsw
 import { redirect } from "next/navigation";
 import { WorksheetAnswerWithUserFlag } from "@/types/answer/answer";
 import { getRelativeTimeString } from "@/util/date";
+import { getRandomAvatarPath } from "@/util/avator_img";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -70,7 +71,15 @@ export default async function WorkSheetPage({ params }: Props) {
             <Card>
               <div className="flex items-center justify-between gap-3 mb-3">
                 <div className="flex items-center gap-3">
-                  <Avatar src="/img/vote.svg" alt="投票アイコン" className="p-1"  />
+                  {session?.user?.email ? (
+                    <div className="w-8 h-8 bg-stone-400 rounded-full flex items-center justify-center shadow-md">
+                      <span className="font-sub-title1 text-white">
+                        {session.user?.name ? session.user.name.charAt(0).toUpperCase() : session.user?.email?.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  ) : (
+                    <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={32} height={32} />
+                  )}
                   <div className="flex items-center gap-2">
                     <span className="font-label">{vUser?.answer_text || "回答なし"}</span><span className="font-caption">に投票</span>
                   </div>
@@ -108,7 +117,7 @@ export default async function WorkSheetPage({ params }: Props) {
                 <Card key={index} className="mb-3">
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <div className="flex items-center gap-3">
-                      <Avatar src="/img/vote.svg" alt="投票アイコン" className="p-1"  />
+                      <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={40} height={40} />
                       <div className="flex items-center gap-2">
                         <span className="font-label">{answer.answer_text}</span><span className="font-caption">に投票</span>
                       </div>

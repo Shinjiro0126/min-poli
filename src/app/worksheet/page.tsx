@@ -9,6 +9,7 @@ import { MdInfoOutline } from "react-icons/md";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
+import { getWorksheetImageUrl } from "@/lib/worksheet/worksheet_img";
 
 export default async function WorkSheet() {
   const breadcrumbData = [
@@ -52,7 +53,7 @@ export default async function WorkSheet() {
                   <div className="border rounded-md overflow-hidden bg-white shadow-md flex-shrink-0 w-[90%] md:w-[33.333%] xl:w-[25%]" key={worksheet.worksheet_id}>
                     <div className="aspect-video overflow-hidden relative group">
                       <Image
-                        src={`/img/worksheet/${worksheet.thumbnail_url || "202506.png"}`}
+                        src={getWorksheetImageUrl(worksheet.thumbnail_url)}
                         alt={worksheet.title}
                         fill
                         className="object-cover"
@@ -112,7 +113,7 @@ export default async function WorkSheet() {
                     )}
                     <div className="aspect-video aspect-video flex-shrink-0 overflow-hidden relative group min-w-[50%] md:min-w-[33.333%] xl:min-w-[25%]">
                       <Image
-                        src={`/img/worksheet/${worksheet.thumbnail_url || "202506.png"}`}
+                        src={getWorksheetImageUrl(worksheet.thumbnail_url)}
                         alt={worksheet.title}
                         fill
                         className="object-cover"

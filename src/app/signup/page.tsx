@@ -11,7 +11,7 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ export default function Login() {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({email, password, name}),
+      body: JSON.stringify({email, password}),
     });
 
     if(!res.ok){
@@ -44,7 +44,7 @@ export default function Login() {
   return (
     <>
       <div 
-        className="grid justify-items-center min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+        className="grid justify-items-center min-h-screen p-2 font-[family-name:var(--font-geist-sans)]"
         style={{
           backgroundImage: 'url("/img/background.svg")',
           backgroundSize: 'cover',
@@ -52,35 +52,39 @@ export default function Login() {
           backgroundPosition: 'center',
         }}
         >
-        <main className="flex flex-col items-center justify-center w-full min-h-screen">
+        <main className="flex flex-col items-center justify-center w-full">
           <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
             <h3 className="mb-10">新規登録</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <TextBox 
-                  id="email"
-                  label="メールアドレス"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.currentTarget.value)}
-                />
-                <TextBox
-                  id="password"
-                  label="パスワード"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
-                />
-                <TextBox
+                <div className="mb-3">
+                  <TextBox 
+                    id="email"
+                    label="メールアドレス"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.currentTarget.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <TextBox
+                    id="password"
+                    label="パスワード"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.currentTarget.value)}
+                  />
+                </div>
+                {/* <TextBox
                   id="name"
                   label="名前"
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.currentTarget.value)}
-                />
+                /> */}
               </div>
               <button
                 type="submit"
