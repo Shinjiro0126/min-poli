@@ -1,7 +1,7 @@
 'use client';
 
 import { MdOutlineClose } from "react-icons/md";
-import ProfileForm from "./ProfileForm";
+import ProfileForm from "../component/user/ProfileForm";
 import { DUser } from "@/types/user/user";
 
 interface EditModalProps {

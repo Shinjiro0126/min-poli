@@ -29,7 +29,7 @@ export default function Header() {
             onClick={() => setProfileMenuOpen((o) => !o)}
           >
             <span className="font-sub-title1 text-white">
-              {session.user?.name ? session.user.name.charAt(0).toUpperCase() : session.user?.email?.charAt(0).toUpperCase()}
+              {session.user?.name ? session.user.name.charAt(0) : session.user?.email?.charAt(0)}
             </span>
           </div>
           {profileMenuOpen && (
@@ -138,15 +138,12 @@ export default function Header() {
             {/* ロゴとタイトル */}
             <Link href="/" className="flex items-center">
               <Image
-                className="h-8 w-auto"
-                src="/img/logo.svg"
+                className="h-10 w-auto"
+                src="/img/logo-title.svg"
                 alt="みんなの政治ロゴ"
                 width={120}
                 height={40}
               />
-              <span className="ml-2 text-lg reggae-one-regular text-[24px]">
-                みんなの政治
-              </span>
             </Link>
 
             {/* PC用ナビゲーション */}

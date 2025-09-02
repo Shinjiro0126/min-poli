@@ -19,6 +19,10 @@ export default async function WorkSheetVotePage({ params }: Props) {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id || null;
 
+  if(userId === null) {
+    redirect(`/login?callbackUrl=/worksheet/vote/${worksheet_id}`);
+  }
+
   //投票済みであれば結果画面へ
   const userAnswer = await getUserAnswer(worksheet_id, userId);
   if (userAnswer) {
@@ -67,7 +71,7 @@ export default async function WorkSheetVotePage({ params }: Props) {
             {worksheet.description}
           </div>
 
-          <VoteButton worksheetId={id} className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4" />
+          <VoteButton worksheetId={id} className="w-full max-w-2xl px-4" />
         </div>
       </main>
     </>

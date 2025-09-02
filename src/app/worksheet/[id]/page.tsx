@@ -74,7 +74,7 @@ export default async function WorkSheetPage({ params }: Props) {
                   {session?.user?.email ? (
                     <div className="w-8 h-8 bg-stone-400 rounded-full flex items-center justify-center shadow-md">
                       <span className="font-sub-title1 text-white">
-                        {session.user?.name ? session.user.name.charAt(0).toUpperCase() : session.user?.email?.charAt(0).toUpperCase()}
+                        {session.user?.name ? session.user.name.charAt(0) : session.user?.email?.charAt(0)}
                       </span>
                     </div>
                   ) : (

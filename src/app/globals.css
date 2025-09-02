@@ -173,27 +173,27 @@ body {
   font-family: var(--font-family);
 }
 
-h1 {
+.h1 {
   @apply text-[48px] font-bold;
 }
 
-h2 {
+.h2 {
   @apply text-[40px] font-bold;
 }
 
-h3 {
+.h3 {
   @apply text-[32px] font-bold;
 }
 
-h4 {
+.h4 {
   @apply text-[24px] font-bold;
 }
 
-h5 {
+.h5 {
   @apply text-[24px] font-semibold;
 }
 
-h6 {
+.h6 {
   @apply text-[20px] font-semibold;
 }
 
@@ -236,22 +236,22 @@ h6 {
 }
 
 @media screen and (max-width: 768px) {
-  h1 {
+  .h1 {
     @apply text-[32px];
   }
-  h2 {
+  .h2 {
     @apply text-[28px];
   }
-  h3 {
+  .h3 {
     @apply text-[24px];
   }
-  h4 {
+  .h4 {
     @apply text-[20px];
   }
-  h5 {
+  .h5 {
     @apply text-[18px];
   }
-  h6 {
+  .h6 {
     @apply text-[16px];
   }
   .font-sub-title1 {

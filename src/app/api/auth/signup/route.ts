@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     }
     if (existing) {
       return NextResponse.json(
-        { error: "このメールアドレスはすでに登録されています。" },
+        { error: "このメールアドレスはすでに登録されています。ログインしてください。" },
         { status: 409 }
       );
     }

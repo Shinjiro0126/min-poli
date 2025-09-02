@@ -33,6 +33,35 @@ export async function getUserById(userId: string): Promise<DUser | null> {
 }
 
 /**
+ * ユーザー情報を取得する
+ * @param email ユーザーID
+ * @returns ユーザー情報、存在しない場合はnull
+ */
+export async function getUserByEmail(email: string): Promise<DUser | null> {
+  try {
+    const { data, error } = await supabase
+      .from('d_users')
+      .select('*')
+      .eq('email', email)
+      .single();
+    
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // データが見つからない場合
+        return null;
+      }
+      console.error('Error fetching user:', error);
+      return null;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return null;
+  }
+}
+
+/**
  * ユーザーのメールアドレスを更新する
  * @param userId ユーザーID
  * @param email 新しいメールアドレス

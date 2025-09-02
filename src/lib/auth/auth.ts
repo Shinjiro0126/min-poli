@@ -86,8 +86,8 @@ export const authOptions: NextAuthOptions = {
 
         if(existing){
           if(existing.auth_provider === "credentials"){
-            // 既に credentials 登録済みユーザー → signup へ誘導
-            return "/signup";
+            // 既に credentials 登録済みユーザー → signup へ誘導（メッセージ付き）
+            return "/login?error=existing_credentials";
           }
 
           // 既に Google 登録済みユーザー → 最終ログイン日時だけ更新

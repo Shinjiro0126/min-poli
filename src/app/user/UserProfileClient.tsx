@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { MdArrowForwardIos, MdMailOutline, MdOutlineCalendarToday } from "react-icons/md";
 import { LuKeyRound } from "react-icons/lu";
 import Card from "../component/Card";
-import EditModal from "./EditModal";
+import EditModal from "../component/user/EditModal";
 import { DUser } from "@/types/user/user";
 
 interface UserProfileClientProps {

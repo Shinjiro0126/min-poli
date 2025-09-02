@@ -16,7 +16,7 @@ export default function TextBox({
 }: TextBoxProps){
   return(
     <div>
-      <label htmlFor="{id}" className="block font-body mb-1">
+      <label htmlFor={id} className="block font-body mb-1">
         {label}
       </label>
       <input 

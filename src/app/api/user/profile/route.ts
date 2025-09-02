@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/auth';
-import { updateUserEmail, updateUserName, updateUserPassword } from '@/lib/user/user';
+import { updateUserEmail, updateUserName, updateUserPassword, getUserById, getUserByEmail } from '@/lib/user/user';
 
 export async function PUT(request: NextRequest) {
   try {
@@ -21,6 +21,15 @@ export async function PUT(request: NextRequest) {
     const body = await request.json();
     console.log('Request body:', body);
     const { email, name, password } = body;
+
+    // 現在のユーザー情報を取得
+    const currentUser = await getUserById(session.user.id);
+    if (!currentUser) {
+      return NextResponse.json(
+        { error: 'ユーザー情報が見つかりません' },
+        { status: 404 }
+      );
+    }
 
     // バリデーション
     if (email && (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
@@ -44,14 +53,35 @@ export async function PUT(request: NextRequest) {
       );
     }
 
+    const updatedData: Record<string, string> = {};
+
     // メールアドレスの更新
     if (email) {
-      const emailResult = await updateUserEmail(session.user.id, email.trim());
-      if (!emailResult.success) {
-        return NextResponse.json(
-          { error: emailResult.error },
-          { status: 400 }
-        );
+      const trimmedEmail = email.trim();
+      
+      // 現在のメールアドレスと同じ場合はスキップ
+      if (trimmedEmail === currentUser.email) {
+        console.log('Email is the same as current, skipping update');
+      } else {
+        // getUserByEmailを使用して他のユーザーがこのメールアドレスを使用していないかチェック
+        const existingUser = await getUserByEmail(trimmedEmail);
+        
+        if (existingUser && existingUser.user_id !== session.user.id) {
+          return NextResponse.json(
+            { error: 'このメールアドレスは既に使用されています' },
+            { status: 400 }
+          );
+        }
+
+        // メールアドレス更新実行
+        const emailResult = await updateUserEmail(session.user.id, trimmedEmail);
+        if (!emailResult.success) {
+          return NextResponse.json(
+            { error: emailResult.error },
+            { status: 400 }
+          );
+        }
+        updatedData.email = trimmedEmail;
       }
     }
 
@@ -64,6 +94,7 @@ export async function PUT(request: NextRequest) {
           { status: 400 }
         );
       }
+      updatedData.name = name.trim();
     }
 
     // パスワードの更新
@@ -77,7 +108,10 @@ export async function PUT(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ 
+      success: true,
+      updatedData // セッション更新用のデータを返す
+    });
   } catch (error) {
     console.error('Profile update error:', error);
     return NextResponse.json(

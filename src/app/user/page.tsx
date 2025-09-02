@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/auth/auth";
 import { getUserById } from "@/lib/user/user";
 import { redirect } from "next/navigation";
 import Breadcrumb from "@/app/component/Breadcrumb";
-import UserProfileClient from "./UserProfileClient";
+import UserProfileClient from "@/app/component/user/UserProfileClient";
 
 export default async function UserProfilePage() {
   const session = await getServerSession(authOptions);
