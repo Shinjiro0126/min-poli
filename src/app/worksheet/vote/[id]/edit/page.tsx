@@ -37,17 +37,16 @@ export default async function EditPage({ params }: Props) {
 
   return (
     <>
-      <main className="pt-16">
-        <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
-          <Breadcrumb segments={breadcrumbData} />
-          <EditForm 
-            worksheetId={worksheet_id}
-            userId={userId!}
-            currentReason={vUser.reason || ""}
-            answerText={vUser.answer_text}
-          />
-        </div>
-      </main>
+      <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
+        <Breadcrumb segments={breadcrumbData} />
+        <EditForm 
+          worksheetId={worksheet_id}
+          userId={userId!}
+          currentReason={vUser.reason || ""}
+          answerText={vUser.answer_text}
+          session={session}
+        />
+      </div>
     </>
   );
 }

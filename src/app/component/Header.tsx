@@ -219,6 +219,34 @@ export default function Header() {
               >
                 投票一覧
               </Link>
+              <Link
+                href="/about"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+                onClick={() => setIsOpen(false)}
+              >
+                このアプリについて
+              </Link>
+              <Link
+                href="/privacy"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+                onClick={() => setIsOpen(false)}
+              >
+                プライバシーポリシー
+              </Link>
+              <Link
+                href="/terms"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+                onClick={() => setIsOpen(false)}
+              >
+                利用規約
+              </Link>
+              <Link
+                href="/contact"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+                onClick={() => setIsOpen(false)}
+              >
+                お問い合わせ
+              </Link>
             </div>
 
             <div className="mt-6 border-t border-gray-200 pt-4">

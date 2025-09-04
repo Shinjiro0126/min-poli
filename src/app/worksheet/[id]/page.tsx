@@ -58,89 +58,87 @@ export default async function WorkSheetPage({ params }: Props) {
 
   return (
     <>
-      <main className="pt-16">
-        <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
-          <Breadcrumb segments={breadcrumbData} />
-          <div className="w-full mb-12">
-            <h4 className="mb-3">{worksheet.title}</h4>
-            <WorksheetChart percentData={percentData} />
-          </div>
+      <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
+        <Breadcrumb segments={breadcrumbData} />
+        <div className="w-full mb-12">
+          <h4 className="h4 mb-3">{worksheet.title}</h4>
+          <WorksheetChart percentData={percentData} />
+        </div>
 
-          <div className="w-full mb-12">
-            <h4 className="mb-3">あなたの回答</h4>
-            <Card>
-              <div className="flex items-center justify-between gap-3 mb-3">
-                <div className="flex items-center gap-3">
-                  {session?.user?.email ? (
-                    <div className="w-8 h-8 bg-stone-400 rounded-full flex items-center justify-center shadow-md">
-                      <span className="font-sub-title1 text-white">
-                        {session.user?.name ? session.user.name.charAt(0) : session.user?.email?.charAt(0)}
-                      </span>
-                    </div>
-                  ) : (
-                    <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={32} height={32} />
-                  )}
-                  <div className="flex items-center gap-2">
-                    <span className="font-label">{vUser?.answer_text || "回答なし"}</span><span className="font-caption">に投票</span>
+        <div className="w-full mb-12">
+          <h4 className="h4 mb-3">あなたの回答</h4>
+          <Card>
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <div className="flex items-center gap-3">
+                {session?.user?.email ? (
+                  <div className="w-8 h-8 bg-stone-400 rounded-full flex items-center justify-center shadow-md">
+                    <span className="font-sub-title1 text-white">
+                      {session.user?.name ? session.user.name.charAt(0) : session.user?.email?.charAt(0)}
+                    </span>
                   </div>
+                ) : (
+                  <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={32} height={32} />
+                )}
+                <div className="flex items-center gap-2">
+                  <span className="font-label">{vUser?.answer_text || "回答なし"}</span><span className="font-caption">に投票</span>
                 </div>
-                <span className="font-caption text-stone-500">{vUser?.created_at ? getRelativeTimeString(vUser.created_at) : ""}</span>
               </div>
-              {vUser?.reason !== null && vUser?.reason !== undefined && vUser?.reason !== "" ? 
-              (
-                <>
-                  <div className="mb-3">
-                    {vUser?.reason}
-                  </div>
-                  <div className="text-right">
-                    <Link href={`/worksheet/vote/${worksheet_id}/edit`} className="text-info-600 cursor-pointer hover:text-info-800 flex items-center justify-end gap-2">
-                      <FiEdit className="text-lg" /><span className="font-caption">編集する</span>
-                    </Link>
-                  </div>
-                </>
-              ) :
-              (
-              <div className="text-right">
-                <Link href={`/worksheet/vote/${worksheet_id}/edit`} className="text-info-600 cursor-pointer hover:text-info-800 flex items-center justify-end gap-2">
-                  <FiEdit className="text-lg" /><span className="font-caption">投票理由を入力する</span>
-                </Link>
-              </div>
-              )}
-              
-            </Card>
-          </div>
+              <span className="font-caption text-stone-500">{vUser?.created_at ? getRelativeTimeString(vUser.created_at) : ""}</span>
+            </div>
+            {vUser?.reason !== null && vUser?.reason !== undefined && vUser?.reason !== "" ? 
+            (
+              <>
+                <div className="mb-3">
+                  {vUser?.reason}
+                </div>
+                <div className="text-right">
+                  <Link href={`/worksheet/vote/${worksheet_id}/edit`} className="text-info-600 cursor-pointer hover:text-info-800 flex items-center justify-end gap-2">
+                    <FiEdit className="text-lg" /><span className="font-caption">編集する</span>
+                  </Link>
+                </div>
+              </>
+            ) :
+            (
+            <div className="text-right">
+              <Link href={`/worksheet/vote/${worksheet_id}/edit`} className="text-info-600 cursor-pointer hover:text-info-800 flex items-center justify-end gap-2">
+                <FiEdit className="text-lg" /><span className="font-caption">投票理由を入力する</span>
+              </Link>
+            </div>
+            )}
+            
+          </Card>
+        </div>
 
-          <div className="w-full mb-12">
-            <h4 className="mb-3">みんなの声</h4>
-            {allAnswers.length > 0 ? (
-              allAnswers.map((answer, index) => (
-                <Card key={index} className="mb-3">
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-3">
-                      <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={40} height={40} />
-                      <div className="flex items-center gap-2">
-                        <span className="font-label">{answer.answer_text}</span><span className="font-caption">に投票</span>
-                      </div>
+        <div className="w-full mb-12">
+          <h4 className="h4 mb-3">みんなの声</h4>
+          {allAnswers.length > 0 ? (
+            allAnswers.map((answer, index) => (
+              <Card key={index} className="mb-3">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-3">
+                    <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={40} height={40} />
+                    <div className="flex items-center gap-2">
+                      <span className="font-label">{answer.answer_text}</span><span className="font-caption">に投票</span>
                     </div>
-                    <span className="font-caption text-stone-500">{answer.created_at ? getRelativeTimeString(answer.created_at) : ""}</span>
                   </div>
-                  <div>
-                    {answer.reason}
-                  </div>
-                </Card>
-              ))
-            ) : (
-              <Card>
-                <div className="text-center text-stone-500">
-                  まだ他のユーザーからの投票理由はありません。
+                  <span className="font-caption text-stone-500">{answer.created_at ? getRelativeTimeString(answer.created_at) : ""}</span>
+                </div>
+                <div>
+                  {answer.reason}
                 </div>
               </Card>
-            )}
-          </div>
-
-
+            ))
+          ) : (
+            <Card>
+              <div className="text-center text-stone-500">
+                まだ他のユーザーからの投票理由はありません。
+              </div>
+            </Card>
+          )}
         </div>
-      </main>
+
+
+      </div>
     </>
   );
 }
