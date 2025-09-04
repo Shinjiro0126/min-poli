@@ -5,13 +5,14 @@ import EditSubmitButton from "@/app/component/worksheet/vote/edit/EditSubmitButt
 import Card from "@/app/component/Card";
 import Avatar from "@/app/component/Avatar";
 import { getRandomAvatarPath } from "@/util/avator_img";
+import { Session } from "next-auth";
 
 interface EditFormProps {
   worksheetId: number;
   userId: string;
   currentReason: string;
   answerText: string;
-  session: any;
+  session: Session;
 }
 
 export default function EditForm({ worksheetId, userId, currentReason, answerText, session }: EditFormProps) {
