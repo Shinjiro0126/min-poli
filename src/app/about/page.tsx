@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { FaCircle } from 'react-icons/fa';
 import { MdOutlineStickyNote2, MdRecordVoiceOver, MdGroups } from "react-icons/md";
 import { VscGraph } from "react-icons/vsc";
 import { FaHandHoldingHeart } from "react-icons/fa6";

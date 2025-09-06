@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Button from '../../Button';  
-import { MdOutlineClose, MdOutlineEmail } from "react-icons/md";
+import { MdOutlineEmail } from "react-icons/md";
 import Link from 'next/link';
 import Image from 'next/image';
 import Modal from '@/app/component/Modal';
