@@ -8,11 +8,9 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="pt-16">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <h1 className="text-3xl font-bold mb-8 text-center">お問い合わせ</h1>
-        <ContactForm />
-      </div>
-    </main>
+    <div className="container mx-auto px-4 py-8 max-w-2xl">
+      <h1 className="text-3xl font-bold mb-8 text-center">お問い合わせ</h1>
+      <ContactForm />
+    </div>
   );
 }

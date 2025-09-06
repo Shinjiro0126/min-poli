@@ -45,32 +45,28 @@ export default async function WorkSheetVoteSelectPage({ params }: Props) {
   if (!worksheetAnswers || worksheetAnswers.length === 0) {
     return (
       <>
-      <main className="pt-16">
         <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
           <Breadcrumb segments={breadcrumbData} />
           <h4 className="mb-3">アンケートが見つかりません</h4>
           <p>指定されたアンケートは存在しないか、削除された可能性があります。</p>
         </div>
-      </main>
       </>
     );
   }
 
   return (
     <>
-      <main className="pt-16">
-        <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
-          <Breadcrumb segments={breadcrumbData} />
-          <div className="w-full mb-4">
-            <VoteForm 
-              worksheetId={worksheet_id}
-              userId={userId}
-              worksheetTitle={worksheet.title}
-              workSheetAnswers={worksheetAnswers}
-            />
-          </div>
+      <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
+        <Breadcrumb segments={breadcrumbData} />
+        <div className="w-full mb-4">
+          <VoteForm 
+            worksheetId={worksheet_id}
+            userId={userId}
+            worksheetTitle={worksheet.title}
+            workSheetAnswers={worksheetAnswers}
+          />
         </div>
-      </main>
+      </div>
     </>
   );
 }

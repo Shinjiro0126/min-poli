@@ -25,7 +25,7 @@ export default function VoteForm({
 
   return (
     <>
-      <h4 className="mb-3">{worksheetTitle}</h4>
+      <h4 className="h4 mb-3">{worksheetTitle}</h4>
 
       <div className="mb-12">
         {workSheetAnswers.map((answer) => (

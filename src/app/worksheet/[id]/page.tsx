@@ -12,6 +12,11 @@ import { redirect } from "next/navigation";
 import { WorksheetAnswerWithUserFlag } from "@/types/answer/answer";
 import { getRelativeTimeString } from "@/util/date";
 import { getRandomAvatarPath } from "@/util/avator_img";
+import Modal from "@/app/component/Modal";
+import Image from "next/image";
+import { MdOutlineEmail } from "react-icons/md";
+import BodyScrollLock from "@/app/component/BodyScrollLock";
+
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -42,7 +47,15 @@ export default async function WorkSheetPage({ params }: Props) {
 
   //自身のアンケート情報取得してなかったら投票ページへ遷移するようにする
   const vUser = await getVUserAnswer(worksheet_id, userId);
-  if (!vUser) {
+  
+  // ワークシートの期限をチェック
+  const now = new Date();
+  const startAt = worksheet.start_at ? new Date(worksheet.start_at) : null;
+  const endAt = worksheet.end_at ? new Date(worksheet.end_at) : null;
+  const isWithinPeriod = (!startAt || now >= startAt) && (!endAt || now <= endAt);
+  
+  // vUserがなく、かつワークシートが期限内の場合のみ投票ページへリダイレクト
+  if (!vUser && isWithinPeriod) {
     redirect(`/worksheet/vote/${worksheet_id}`);
   }
 
@@ -54,20 +67,64 @@ export default async function WorkSheetPage({ params }: Props) {
   const allAnswers = await getAllAnswers(worksheet_id, userId);
   const percentData = await getPercentageData(userId, worksheet_id);
 
-  console.log(vUser?.reason);
+  // コールバックURLを作成
+  const callbackUrl = `/worksheet/${worksheet_id}`;
 
   return (
     <>
-      <main className="pt-16">
+      <div className="relative min-h-screen">
+        {!userId && (
+          <>
+            <BodyScrollLock isLocked={true} />
+            <Modal
+              isOpen={true}
+              isClosedButton={false}
+              title="会員登録して結果を見よう"
+            >
+              <p className="mb-4">会員登録すると、みんなのアンケート結果を確認できます。</p>
+
+              <div className='flex gap-10 justify-center items-center mb-6'>
+                <Link href={`/signup?callbackUrl=${encodeURIComponent(callbackUrl)}`} className="text-center hover:text-primary-700">
+                  <div className='w-13 h-13 border border-stone-300 rounded-full flex justify-center items-center bg-white hover:border-primary-700 mb-2'>
+                    <Image
+                      src="/img/logo_google.svg"
+                      alt="Googleで新規登録"
+                      width={24}
+                      height={24}
+                    />
+                  </div>
+                  <div className='font-caption'>Google</div>
+                </Link>
+                <Link href={`/signup?callbackUrl=${encodeURIComponent(callbackUrl)}`} className="text-center hover:text-primary-700">
+                  <div className='w-13 h-13 border border-stone-300 rounded-full flex justify-center items-center bg-white hover:border-primary-700 mb-2'>
+                    <MdOutlineEmail className="w-6 h-6 text-stone-800" />
+                  </div>
+                  <div className='font-caption'>メール</div>
+                </Link>
+              </div>
+
+              <div className="text-center text-sm text-stone-500">
+                <p>
+                  すでに会員の方は、
+                  <Link href={`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`} className="text-primary-700 hover:text-primary-900 font-semibold underline">
+                    ログイン
+                  </Link>
+                  してください。
+                </p>
+              </div>
+            </Modal>
+          </>
+        )}
+
         <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
           <Breadcrumb segments={breadcrumbData} />
           <div className="w-full mb-12">
-            <h4 className="mb-3">{worksheet.title}</h4>
+            <h4 className="h4 mb-3">{worksheet.title}</h4>
             <WorksheetChart percentData={percentData} />
           </div>
 
           <div className="w-full mb-12">
-            <h4 className="mb-3">あなたの回答</h4>
+            <h4 className="h4 mb-3">あなたの回答</h4>
             <Card>
               <div className="flex items-center justify-between gap-3 mb-3">
                 <div className="flex items-center gap-3">
@@ -81,37 +138,32 @@ export default async function WorkSheetPage({ params }: Props) {
                     <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={32} height={32} />
                   )}
                   <div className="flex items-center gap-2">
-                    <span className="font-label">{vUser?.answer_text || "回答なし"}</span><span className="font-caption">に投票</span>
+                    <span className="font-label">{vUser?.answer_text || "回答なし"}</span>{vUser ? <span className="font-caption">に投票</span> : null}
                   </div>
                 </div>
                 <span className="font-caption text-stone-500">{vUser?.created_at ? getRelativeTimeString(vUser.created_at) : ""}</span>
               </div>
-              {vUser?.reason !== null && vUser?.reason !== undefined && vUser?.reason !== "" ? 
-              (
+              {vUser && (
                 <>
                   <div className="mb-3">
-                    {vUser?.reason}
+                    {vUser.reason}
                   </div>
                   <div className="text-right">
                     <Link href={`/worksheet/vote/${worksheet_id}/edit`} className="text-info-600 cursor-pointer hover:text-info-800 flex items-center justify-end gap-2">
-                      <FiEdit className="text-lg" /><span className="font-caption">編集する</span>
+                      <FiEdit className="text-lg" />
+                      <span className="font-caption">
+                        {vUser?.reason ? "編集する" : "投票理由を入力する"}
+                      </span>
                     </Link>
                   </div>
                 </>
-              ) :
-              (
-              <div className="text-right">
-                <Link href={`/worksheet/vote/${worksheet_id}/edit`} className="text-info-600 cursor-pointer hover:text-info-800 flex items-center justify-end gap-2">
-                  <FiEdit className="text-lg" /><span className="font-caption">投票理由を入力する</span>
-                </Link>
-              </div>
               )}
-              
+
             </Card>
           </div>
 
           <div className="w-full mb-12">
-            <h4 className="mb-3">みんなの声</h4>
+            <h4 className="h4 mb-3">みんなの声</h4>
             {allAnswers.length > 0 ? (
               allAnswers.map((answer, index) => (
                 <Card key={index} className="mb-3">
@@ -140,7 +192,7 @@ export default async function WorkSheetPage({ params }: Props) {
 
 
         </div>
-      </main>
+      </div>
     </>
   );
 }
