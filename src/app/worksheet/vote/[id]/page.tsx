@@ -3,10 +3,11 @@ import React from 'react';
 import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
-import { getUserAnswer, getWorksheetByIdEnabled } from "@/lib/answer/answer";
+import { getUserAnswer, getWorksheetById } from "@/lib/answer/answer";
 import { redirect } from "next/navigation";
 import VoteButton from "@/app/component/worksheet/vote/VoteButton";
 import { getWorksheetImageUrl } from "@/lib/worksheet/worksheet_img";
+import { isWithinPeriod } from "@/util/date";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -34,7 +35,7 @@ export default async function WorkSheetVotePage({ params }: Props) {
     { path: `/worksheet/vote/${id}`, label: "アンケート" }
   ];
 
-  const worksheet = await getWorksheetByIdEnabled(worksheet_id);
+  const worksheet = await getWorksheetById(worksheet_id);
   if(!worksheet) {
     return(
       <>
@@ -47,6 +48,11 @@ export default async function WorkSheetVotePage({ params }: Props) {
         </div>
       </>
     );
+  }
+
+// 期限チェック - 期限が切れている場合は結果ページへリダイレクト
+  if (!isWithinPeriod(worksheet.start_at, worksheet.end_at)) {
+    redirect(`/worksheet/${worksheet_id}`);
   }
 
   return (

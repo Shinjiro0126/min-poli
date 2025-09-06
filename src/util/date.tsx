@@ -47,3 +47,44 @@ export const getRelativeTimeString = (dateString: string): string => {
   const years = Math.floor(diffInSeconds / 31536000);
   return `${years}年前`;
 };
+
+
+// src/lib/utils/date.ts
+/**
+ * 指定された終了日時が現在時刻より過去かどうかを判定する
+ * @param endAt 終了日時（ISO文字列形式）
+ * @returns 期限切れの場合true、そうでなければfalse
+ */
+export function isExpired(endAt: string | null): boolean {
+  if (!endAt) return false;
+  const endDate = new Date(endAt);
+  const now = new Date();
+  return now > endDate;
+}
+
+/**
+ * 指定された開始日時が1週間以内かどうかを判定する
+ * @param startAt 開始日時（ISO文字列形式）
+ * @returns 1週間以内の場合true、そうでなければfalse
+ */
+export function isNewWorksheet(startAt: string | null): boolean {
+  if (!startAt) return false;
+  const startDate = new Date(startAt);
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  return startDate >= oneWeekAgo;
+}
+
+/**
+ * ワークシートが期限内かどうかを判定する
+ * @param startAt 開始日時（ISO文字列形式）
+ * @param endAt 終了日時（ISO文字列形式）
+ * @returns 期限内の場合true、そうでなければfalse
+ */
+export function isWithinPeriod(startAt: string | null | undefined, endAt: string | null | undefined): boolean {
+  const now = new Date();
+  const start = startAt ? new Date(startAt) : null;
+  const end = endAt ? new Date(endAt) : null;
+  
+  return (!start || now >= start) && (!end || now <= end);
+}

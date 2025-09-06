@@ -10,6 +10,7 @@ import { MdCheckCircleOutline } from "react-icons/md";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
 import { getWorksheetImageUrl } from "@/lib/worksheet/worksheet_img";
+import { isExpired, isNewWorksheet } from "@/util/date";
 
 export default async function WorkSheet() {
   const breadcrumbData = [
@@ -29,13 +30,6 @@ export default async function WorkSheet() {
   // 1週間前の日付を計算
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-  // ワークシートが新しいかどうかを判定する関数
-  const isNewWorksheet = (startAt: string | null) => {
-    if (!startAt) return false;
-    const startDate = new Date(startAt);
-    return startDate >= oneWeekAgo;
-  };
 
   return (
     <>
@@ -91,7 +85,7 @@ export default async function WorkSheet() {
                         href={`/worksheet/${worksheet.worksheet_id}`}
                         className="inline-block text-white bg-primary-700 hover:bg-primary-900"
                       >
-                        {worksheet.is_answer ? "結果を見る" : "投票する"}
+                        {worksheet.is_answer || isExpired(worksheet.end_at) ? "結果を見る" : "投票する"}
                       </Button>
                     </div>
                   </div>
@@ -151,7 +145,7 @@ export default async function WorkSheet() {
                         href={`/worksheet/${worksheet.worksheet_id}`}
                         className="inline-block text-white bg-primary-700 hover:bg-primary-900"
                       >
-                        {worksheet.is_answer ? "結果を見る" : "投票する"}
+                        {worksheet.is_answer || isExpired(worksheet.end_at) ? "結果を見る" : "投票する"}
                       </Button>
                     </div>
                   </div>

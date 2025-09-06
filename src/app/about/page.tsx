@@ -176,28 +176,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* ボトムメッセージ */}
-          <div className="mt-16 text-center">
-            <div className="border border-gray-200 rounded-lg p-8 bg-gray-50">
-              <p className="text-gray-700 font-medium mb-6">
-                これだけで政治参加ができます
-              </p>
-              <div className="flex justify-center gap-12 text-sm text-gray-600">
-                <span className="flex items-center gap-2">
-                  <FaCircle className="text-blue-500 text-xs" />
-                  無料で利用
-                </span>
-                <span className="flex items-center gap-2">
-                  <FaCircle className="text-green-500 text-xs" />
-                  匿名投票可能
-                </span>
-                <span className="flex items-center gap-2">
-                  <FaCircle className="text-purple-500 text-xs" />
-                  いつでも参加
-                </span>
-              </div>
-            </div>
-          </div>
+
         </div>
       </section>
 
