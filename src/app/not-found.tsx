@@ -1,6 +1,4 @@
 import Button from "@/app/component/Button";
-import Link from "next/link";
-import { MdHome, MdList } from "react-icons/md";
 
 export default function NotFoundPage() {
   return (

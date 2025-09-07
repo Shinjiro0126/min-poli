@@ -4,10 +4,8 @@ import Button from './component/Button';
 import { MdRefresh, MdError } from 'react-icons/md';
 
 export default function GlobalError({
-  error,
   reset,
 }: {
-  error: Error & { digest?: string };
   reset: () => void;
 }) {
   return (

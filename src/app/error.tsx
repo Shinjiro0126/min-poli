@@ -1,15 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { MdError } from 'react-icons/md';
 import Button from '@/app/component/Button';
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
 }) {
   useEffect(() => {
     // エラーログを記録（本番環境では外部サービスに送信）
