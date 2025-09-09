@@ -1,10 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import VoteForm from '../VoteForm';
 
 // Mock the VoteSubmitButton component
 jest.mock('../VoteSubmitButtonProps', () => {
   return function MockVoteSubmitButton({ 
-    selectedValue, 
     disabled, 
     isSubmitting 
   }: {

@@ -18,6 +18,7 @@ describe('/api/contact', () => {
   let mockSendMail: jest.Mock;
 
   beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const nodemailer = require('nodemailer');
     mockSendMail = jest.fn().mockResolvedValue({ messageId: 'test-message-id' });
     nodemailer.createTransport.mockReturnValue({
@@ -40,7 +41,7 @@ describe('/api/contact', () => {
     delete process.env.SMTP_PASS;
   });
 
-  const createMockRequest = (body: any) => {
+  const createMockRequest = (body: Record<string, unknown>) => {
     return new NextRequest('http://localhost:3000/api/contact', {
       method: 'POST',
       headers: {
@@ -204,6 +205,7 @@ describe('/api/contact', () => {
     const request = createMockRequest(validData);
     await POST(request);
 
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const nodemailer = require('nodemailer');
     expect(nodemailer.createTransport).toHaveBeenCalledWith({
       host: 'test-smtp.example.com',
