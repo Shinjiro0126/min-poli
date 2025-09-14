@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/app/component/Header";
+import Footer from "@/app/component/Footer";
 import Providers from "./providers";
 import "@/app/globals.css";
 
@@ -25,11 +26,14 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body
-        className={`${reggaeOne.variable} ${zenKurenaido.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-stone-50`}
+        className={`${reggaeOne.variable} ${zenKurenaido.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-stone-50 flex flex-col`}
       >
         <Providers>
           <Header />
-          {children}
+          <main className="pt-16 min-h-screen sm:text-sm">
+            {children}
+          </main>
+          <Footer />
         </Providers>
       </body>
     </html>

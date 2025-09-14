@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password, name } = await req.json();
 
-    if (!email || !password || !name) {
+    if (!email || !password) {
       return NextResponse.json(
-        { error: "email, password, name はすべて必須です。" },
+        { error: "email, password はすべて必須です。" },
         { status: 400 }
       );
     }
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     }
     if (existing) {
       return NextResponse.json(
-        { error: "このメールアドレスはすでに登録されています。" },
+        { error: "このメールアドレスはすでに登録されています。ログインしてください。" },
         { status: 409 }
       );
     }

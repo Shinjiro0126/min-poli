@@ -177,14 +177,19 @@ export async function getVUserAnswer(worksheetId: number, userId: string | null)
 
 export async function getAllAnswers(worksheetId: number, currentUserId: string | null): Promise<VAnswer[]> {
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from('v_answer')
       .select('*')
       .eq('worksheet_id', worksheetId)
-      .neq('user_id', currentUserId || '') // 自分以外のユーザー
       .eq('is_active', true)
-      .not('reason', 'is', null) // reasonがnullでないもの
-      .order('created_at', { ascending: false }); // 新しい順に並べる
+      .not('reason', 'is', null)
+      .order('created_at', { ascending: false });
+
+    if (currentUserId) {
+      query = query.neq('user_id', currentUserId);
+    }
+
+    const { data, error } = await query;
     
     if (error) {
       console.error('Error fetching all answers:', error);

@@ -42,11 +42,10 @@ export default async function Home() {
       <div 
         className="min-h-screen font-[family-name:var(--font-geist-sans)]"
         >
-      <main className="w-full pt-16">
         <div className="py-16 px-3 mb-12 position-relative h-[256px] relative" style={{ backgroundImage: 'url("/img/main-v.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white"></div>
             <div className="max-w-2xl mx-auto relative z-10">
-              <h4 className="mb-4">今日のテーマで投票しよう！</h4>
+              <h2 className="h4 mb-4">今日のテーマで投票しよう！</h2>
               <p className="mb-6">政治や社会課題について、みんなで考えて意見を共有しよう！</p>
               <div className="flex gap-4 items-center">
                 <div className="flex -space-x-1 overflow-hidden">
@@ -70,7 +69,7 @@ export default async function Home() {
         <div className="max-w-3xl mx-auto px-3">
           <Card className="mb-6 shadow-md">
             <div className="text-center mb-6">
-              <div className="text-stone-500 mb-2">今日の投票テーマ</div>
+              <h1 className="text-stone-500 mb-2">今日の投票テーマ</h1>
               {latestWorksheet ? (
                 <>
                   <div className="text-primary-700 font-sub-title1 mb-4">{latestWorksheet.title}</div>
@@ -105,14 +104,14 @@ export default async function Home() {
                 <div className="flex justify-center mb-4">
                   <LuUsers className="text-[44px] text-stone-700" />
                 </div>
-                <h3 className="mb-1">{latestWorksheet?.vote_count || 0}</h3>
+                <div className="h3 mb-1">{latestWorksheet?.vote_count || 0}</div>
                 <p className="text-stone-700 font-body-sm">参加者数</p>
               </Card>
               <Card className="shadow-md text-center">
                 <div className="flex justify-center mb-4">
                   <FaHeartbeat className="text-[44px] text-stone-700" />
                 </div>
-                <h3 className="mb-1">{interestBoostPercent}<span className="font-caption">%</span></h3>
+                <div className="h3 mb-1">{interestBoostPercent}<span className="font-caption">%</span></div>
                 <p className="text-stone-700 font-body-sm">関心向上率</p>
               </Card>
             </div>
@@ -141,7 +140,7 @@ export default async function Home() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 mb-6">
+            <div className="grid grid-cols-1 mb-16">
               <Card className="shadow-md">
                 <div className="flex gap-4 items-center mb-2">
                   <MdLightbulb className="text-[24px] text-stone-700" />
@@ -158,8 +157,6 @@ export default async function Home() {
 
         </div>
 
-
-      </main>
     </div>
     </>
   );

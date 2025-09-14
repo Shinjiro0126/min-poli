@@ -88,7 +88,7 @@ export default function VoteSubmitButton({
   }
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 mb-4">
+    <div className="flex flex-col sm:flex-row gap-3 mb-4 px-3">
       <Button
               onClick={() => router.push(`/worksheet/vote/${worksheetId}`)}
               disabled={isSubmitting}

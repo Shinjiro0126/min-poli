@@ -23,6 +23,10 @@ export default async function EditPage({ params }: Props) {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id || null;
 
+  if (!session || !userId) {
+    redirect(`/login?callbackUrl=/worksheet/vote/${worksheet_id}/edit`);
+  }
+
   // 自身のアンケート情報取得してなかったら投票ページへ遷移
   const vUser = await getVUserAnswer(worksheet_id, userId);
   if (!vUser) {
@@ -30,24 +34,23 @@ export default async function EditPage({ params }: Props) {
   }
 
   const breadcrumbData = [
-    { path: "/worksheet", label: "投票一覧" },
-    { path: `/worksheet/${worksheet_id}`, label: "アンケート結果" },
-    { path: `/worksheet/vote/${worksheet_id}/edit`, label: "投票理由編集" }
+    { path: "/worksheet", label: "投票一覧", isActive: false },
+    { path: `/worksheet/${worksheet_id}`, label: "アンケート結果", isActive: false },
+    { path: `/worksheet/vote/${worksheet_id}/edit`, label: "投票理由編集", isActive: true }
   ];
 
   return (
     <>
-      <main className="pt-16">
-        <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
-          <Breadcrumb segments={breadcrumbData} />
-          <EditForm 
-            worksheetId={worksheet_id}
-            userId={userId!}
-            currentReason={vUser.reason || ""}
-            answerText={vUser.answer_text}
-          />
-        </div>
-      </main>
+      <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
+        <Breadcrumb segments={breadcrumbData} />
+        <EditForm 
+          worksheetId={worksheet_id}
+          userId={userId}
+          currentReason={vUser.reason || ""}
+          answerText={vUser.answer_text}
+          session={session}
+        />
+      </div>
     </>
   );
 }

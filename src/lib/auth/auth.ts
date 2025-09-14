@@ -7,7 +7,11 @@ import bcrypt from "bcrypt";
 import { formatToJST } from "@/util/timestamp_jp";
 
 export const authOptions: NextAuthOptions = {
-
+  session: {
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
+  },
+  
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -57,7 +61,6 @@ export const authOptions: NextAuthOptions = {
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
-  session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   callbacks: {
     async signIn({user, account}){
@@ -83,8 +86,8 @@ export const authOptions: NextAuthOptions = {
 
         if(existing){
           if(existing.auth_provider === "credentials"){
-            // 既に credentials 登録済みユーザー → signup へ誘導
-            return "/signup";
+            // 既に credentials 登録済みユーザー → signup へ誘導（メッセージ付き）
+            return "/login?error=existing_credentials";
           }
 
           // 既に Google 登録済みユーザー → 最終ログイン日時だけ更新

@@ -2,11 +2,11 @@ import Breadcrumb from "@/app/component/Breadcrumb";
 import { getDVideos } from "@/lib/dvideo/dvideos";
 import VideoList from "../component/know/VideoList";
 import { getLatestSummary } from "@/lib/summary/summary";
-import NewsSummary from "@/app/component/know/NewsSummary"
+import NewsSummary from "@/app/component/know/NewsSummary";
 
 export default async function KnowPage() {
   const breadcrumbData = [
-    {path: "/know", label: "政治を知る"}
+    {path: "/know", label: "政治を知る", isActive: true}
   ];
   
   const [dvideos, latestNews] = await Promise.all([

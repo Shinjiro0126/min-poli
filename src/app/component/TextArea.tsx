@@ -4,7 +4,7 @@ export interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   id: string;
   label: string;
   error?: string;
-  valeu?: string;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
