@@ -17,8 +17,8 @@ export default async function VideoPage({ params }: Props) {
   }
 
   const breadcrumbData = [
-    { path: "/know", label: "政治を知る" },
-    { path: `/know/${video.id}`, label: "詳細" }
+    { path: "/know", label: "政治を知る", isActive: false },
+    { path: `/know/${video.id}`, label: "詳細", isActive: true }
   ];
 
   return (

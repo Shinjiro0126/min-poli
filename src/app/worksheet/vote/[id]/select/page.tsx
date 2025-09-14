@@ -35,9 +35,9 @@ export default async function WorkSheetVoteSelectPage({ params }: Props) {
   }
 
   const breadcrumbData = [
-    { path: "/worksheet", label: "投票一覧" },
-    { path: `/worksheet/vote/${id}`, label: "アンケート" },
-    { path: `/worksheet/vote/${id}/select`, label: "投票" }
+    { path: "/worksheet", label: "投票一覧", isActive: false },
+    { path: `/worksheet/vote/${id}`, label: "アンケート", isActive: false },
+    { path: `/worksheet/vote/${id}/select`, label: "投票", isActive: true }
   ];
 
   //回答の選択肢データ

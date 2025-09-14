@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          <main className="pt-16 min-h-screen">
+          <main className="pt-16 min-h-screen sm:text-sm">
             {children}
           </main>
           <Footer />

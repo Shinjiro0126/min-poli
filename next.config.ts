@@ -24,6 +24,18 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    // モジュール解決の問題を修正
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    };
+    
+    return config;
+  },
+  serverExternalPackages: ['sharp', 'onnxruntime-node'],
 };
 
 export default nextConfig;

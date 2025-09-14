@@ -16,7 +16,7 @@ export default function Header() {
     if (status === "loading") {
       return (
         <div className="flex items-center space-x-4">
-          <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+          <div className="w-10 h-10 bg-gray-200 rounded-full animate-pulse"></div>
         </div>
       );
     }
@@ -25,7 +25,7 @@ export default function Header() {
       return (
         <div className="relative" ref={menuRef}>
           <div 
-            className="w-8 h-8 bg-stone-400 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-stone-600 transition-colors"
+            className="w-10 h-10 bg-stone-400 rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-stone-600 transition-colors"
             onClick={() => setProfileMenuOpen((o) => !o)}
           >
             <span className="font-sub-title1 text-white">
@@ -86,9 +86,16 @@ export default function Header() {
         <>
           <Link
             href="/user"
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 flex items-center gap-4"
           >
-            プロフィール
+            <div
+              className="w-8 h-8 bg-stone-400 rounded-full flex items-center justify-center cursor-pointer hover:bg-stone-600 transition-colors"
+              >
+              <span className="font-sub-title1 text-white">
+                {session.user?.name ? session.user.name.charAt(0) : session.user?.email?.charAt(0)}
+              </span>
+            </div>
+              プロフィール
           </Link>
           <button
             className="block px-3 py-2 rounded-md text-base font-medium text-primary-700 hover:bg-gray-100 hover:text-primary-900"

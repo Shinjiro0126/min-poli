@@ -7,7 +7,7 @@ import Link from "next/link";
 import { FiEdit } from "react-icons/fi";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
-import { getWorksheetAnswersResult, getWorksheetById, getVUserAnswer, getAllAnswers } from "@/lib/answer/answer";
+import { getWorksheetAnswersResult, getWorksheetById, getVUserAnswer } from "@/lib/answer/answer";
 import { redirect } from "next/navigation";
 import { WorksheetAnswerWithUserFlag } from "@/types/answer/answer";
 import { getRelativeTimeString } from "@/util/date";
@@ -16,6 +16,7 @@ import Modal from "@/app/component/Modal";
 import Image from "next/image";
 import { MdOutlineEmail } from "react-icons/md";
 import BodyScrollLock from "@/app/component/BodyScrollLock";
+import InfiniteAnswersList from "@/app/component/worksheet/InfiniteAnswersList";
 
 
 interface Props {
@@ -26,6 +27,11 @@ export default async function WorkSheetPage({ params }: Props) {
   const { id } = await params;
   const worksheet_id = parseInt(id);
 
+  const breadcrumbData = [
+    { path: "/worksheet", label: "投票一覧", isActive: false },
+    { path: `/worksheet/${worksheet_id}`, label: "アンケート結果", isActive: true }
+  ]; 
+
   //worksheetの取得
   const worksheet = await getWorksheetById(worksheet_id);
   if(!worksheet) {
@@ -33,7 +39,7 @@ export default async function WorkSheetPage({ params }: Props) {
       <>
       <main className="pt-16">
         <div className="max-w-2xl mx-auto pt-12 px-4 mb-12">
-          <Breadcrumb segments={[{ path: "/know", label: "政治を知る" }]} />
+          <Breadcrumb segments={breadcrumbData} />
           <h4 className="mb-3">アンケートが見つかりません</h4>
           <p>指定されたアンケートは存在しないか、削除された可能性があります。</p>
         </div>
@@ -59,12 +65,8 @@ export default async function WorkSheetPage({ params }: Props) {
     redirect(`/worksheet/vote/${worksheet_id}`);
   }
 
-  const breadcrumbData = [
-    { path: "/worksheet", label: "投票一覧" },
-    { path: `/worksheet/${worksheet_id}`, label: "アンケート結果" }
-  ]; 
   
-  const allAnswers = await getAllAnswers(worksheet_id, userId);
+  
   const percentData = await getPercentageData(userId, worksheet_id);
 
   // コールバックURLを作成
@@ -164,30 +166,7 @@ export default async function WorkSheetPage({ params }: Props) {
 
           <div className="w-full mb-12">
             <h4 className="h4 mb-3">みんなの声</h4>
-            {allAnswers.length > 0 ? (
-              allAnswers.map((answer, index) => (
-                <Card key={index} className="mb-3">
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-3">
-                      <Avatar src={getRandomAvatarPath()} alt="ユーザーアバター" width={40} height={40} />
-                      <div className="flex items-center gap-2">
-                        <span className="font-label">{answer.answer_text}</span><span className="font-caption">に投票</span>
-                      </div>
-                    </div>
-                    <span className="font-caption text-stone-500">{answer.created_at ? getRelativeTimeString(answer.created_at) : ""}</span>
-                  </div>
-                  <div>
-                    {answer.reason}
-                  </div>
-                </Card>
-              ))
-            ) : (
-              <Card>
-                <div className="text-center text-stone-500">
-                  まだ他のユーザーからの投票理由はありません。
-                </div>
-              </Card>
-            )}
+            <InfiniteAnswersList worksheetId={worksheet_id} userId={userId} />
           </div>
 
 

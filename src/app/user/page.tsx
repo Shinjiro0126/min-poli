@@ -30,7 +30,7 @@ export default async function UserProfilePage() {
   }
 
   const breadcrumbData = [
-    { path: "/user", label: "プロフィール" }
+    { path: "/user", label: "プロフィール", isActive: true }
   ];
 
   return (

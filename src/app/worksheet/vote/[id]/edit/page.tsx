@@ -34,9 +34,9 @@ export default async function EditPage({ params }: Props) {
   }
 
   const breadcrumbData = [
-    { path: "/worksheet", label: "投票一覧" },
-    { path: `/worksheet/${worksheet_id}`, label: "アンケート結果" },
-    { path: `/worksheet/vote/${worksheet_id}/edit`, label: "投票理由編集" }
+    { path: "/worksheet", label: "投票一覧", isActive: false },
+    { path: `/worksheet/${worksheet_id}`, label: "アンケート結果", isActive: false },
+    { path: `/worksheet/vote/${worksheet_id}/edit`, label: "投票理由編集", isActive: true }
   ];
 
   return (

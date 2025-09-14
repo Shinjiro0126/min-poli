@@ -140,7 +140,7 @@ export default async function Home() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 mb-6">
+            <div className="grid grid-cols-1 mb-16">
               <Card className="shadow-md">
                 <div className="flex gap-4 items-center mb-2">
                   <MdLightbulb className="text-[24px] text-stone-700" />
