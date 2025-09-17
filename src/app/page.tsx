@@ -60,7 +60,7 @@ export default async function Home() {
                   ))}
                 </div>
                 <div className="font-body-sm">
-                  <span className="font-overline">{latestWorksheet?.vote_count || 0}人</span>が参加中
+                  <span className="font-overline">{latestWorksheet?.vote_count.toLocaleString() || 0}人</span>が参加中
                 </div>
               </div>
             </div>

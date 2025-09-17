@@ -17,6 +17,7 @@ import Image from "next/image";
 import { MdOutlineEmail } from "react-icons/md";
 import BodyScrollLock from "@/app/component/BodyScrollLock";
 import InfiniteAnswersList from "@/app/component/worksheet/InfiniteAnswersList";
+import { LuUsers } from "react-icons/lu";
 
 
 interface Props {
@@ -123,6 +124,10 @@ export default async function WorkSheetPage({ params }: Props) {
           <div className="w-full mb-12">
             <h4 className="h4 mb-3">{worksheet.title}</h4>
             <WorksheetChart percentData={percentData} />
+            <div className="mt-4 flex items-center gap-2 text-stone-600">
+              <LuUsers className="text-[20px] font-bold" />
+              <span>{percentData.reduce((total, item) => total + item.value, 0).toLocaleString()}票</span>
+            </div>
           </div>
 
           <div className="w-full mb-12">

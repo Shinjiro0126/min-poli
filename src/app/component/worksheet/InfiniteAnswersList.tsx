@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Card from "@/app/component/Card";
 import Avatar from "@/app/component/Avatar";
 import { getRelativeTimeString } from "@/util/date";
@@ -23,6 +23,8 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
+  const isInitialized = useRef(false);
+  const fetchAnswersRef = useRef<((pageNum: number, reset?: boolean) => Promise<void>) | null>(null);
 
   const fetchAnswers = useCallback(async (pageNum: number, reset = false) => {
     if (loading) return;
@@ -57,12 +59,20 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [worksheetId, userId, loading]);
+  }, [worksheetId, userId]); // loadingを依存配列から削除
+
+  // fetchAnswersの参照を保存
+  useEffect(() => {
+    fetchAnswersRef.current = fetchAnswers;
+  }, [fetchAnswers]);
 
   // 初回データ取得
   useEffect(() => {
-    fetchAnswers(1, true);
-  }, [fetchAnswers]);
+    if (!isInitialized.current) {
+      isInitialized.current = true;
+      fetchAnswers(1, true);
+    }
+  }, []);
 
   // スクロールイベントハンドラー
   useEffect(() => {
@@ -77,13 +87,13 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
       if (scrollTop + clientHeight >= scrollHeight - 1000) {
         const nextPage = page + 1;
         setPage(nextPage);
-        fetchAnswers(nextPage);
+        fetchAnswersRef.current?.(nextPage);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading, hasMore, page, fetchAnswers]);
+  }, [loading, hasMore, page]); // fetchAnswersを依存配列から削除
 
   if (answers.length === 0 && !loading) {
     return (
@@ -129,7 +139,7 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
         <div className="text-center text-red-500 py-4">
           <p>{error}</p>
           <button 
-            onClick={() => fetchAnswers(page, false)}
+            onClick={() => fetchAnswersRef.current?.(page, false)}
             className="mt-2 text-primary-700 hover:text-primary-900 underline"
           >
             再試行

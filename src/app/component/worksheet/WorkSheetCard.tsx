@@ -60,7 +60,7 @@ export default function WorkSheetCard({
             <div className="mb-4 text-stone-500 flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <LuUsers className="text-[20px] text-stone-700" />
-                <span className="font-overline">{worksheet.vote_count}</span>
+                <span className="font-overline">{worksheet.vote_count.toLocaleString()}</span>
               </div>
               {worksheet.end_at && (
                 <div className="flex items-center gap-1">

@@ -69,15 +69,10 @@ export default function EditSubmitButton({
         onClick={handleSubmit}
         disabled={isSubmitting}
         className="bg-primary-700 hover:bg-primary-900 flex-1 text-white py-3 order-0 sm:order-1"
+        isLoading={isSubmitting}
+        loadingText="更新中..."
       >
-        {isSubmitting ? (
-          <span className="flex items-center justify-center">
-            <AiOutlineLoading3Quarters className="mr-3 size-5 animate-spin" />
-            <span>更新中...</span>
-          </span>
-        ) : (
-          "更新する"
-        )}
+        更新する
       </Button>
     </div>
   );
