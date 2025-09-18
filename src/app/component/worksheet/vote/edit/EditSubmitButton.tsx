@@ -4,7 +4,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Button from "../../../Button";
 import { updateAnswerReason } from "@/lib/answer/edit";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface EditSubmitButtonProps {
   worksheetId: number;

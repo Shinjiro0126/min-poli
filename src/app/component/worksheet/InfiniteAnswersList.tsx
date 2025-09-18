@@ -59,7 +59,7 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
     } finally {
       setLoading(false);
     }
-  }, [worksheetId, userId]); // loadingを依存配列から削除
+  }, [worksheetId, userId]); // loadingを依存配列に追加
 
   // fetchAnswersの参照を保存
   useEffect(() => {
@@ -72,7 +72,7 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
       isInitialized.current = true;
       fetchAnswers(1, true);
     }
-  }, []);
+  }, [fetchAnswers]);
 
   // スクロールイベントハンドラー
   useEffect(() => {
