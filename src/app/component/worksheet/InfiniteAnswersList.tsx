@@ -24,11 +24,13 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const isInitialized = useRef(false);
+  const loadingRef = useRef(false);
   const fetchAnswersRef = useRef<((pageNum: number, reset?: boolean) => Promise<void>) | null>(null);
 
   const fetchAnswers = useCallback(async (pageNum: number, reset = false) => {
-    if (loading) return;
+    if (loadingRef.current) return;
     
+    loadingRef.current = true;
     setLoading(true);
     setError(null);
 
@@ -57,6 +59,7 @@ export default function InfiniteAnswersList({ worksheetId, userId }: Props) {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'エラーが発生しました');
     } finally {
+      loadingRef.current = false;
       setLoading(false);
     }
   }, [worksheetId, userId]); // loadingを依存配列に追加

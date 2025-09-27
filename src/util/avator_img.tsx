@@ -7,18 +7,10 @@
 export function getRandomAvatarPath(): string {
   // public/img/avator内の画像ファイル名のリスト
   const avatarImages = [
-    'avator1.svg',
-    'avator2.svg',
-    'avator3.svg',
-    'avator4.svg',
-    'avator5.svg',
-    'avator6.svg',
-    'avator7.svg',
-    'avator8.svg',
-    'avator9.svg',
-    'avator10.svg',
-    'avator11.svg',
-    'avator12.svg',
+    'avator1.png',
+    'avator2.png',
+    'avator3.png',
+    'avator4.png'
   ];
 
   // ランダムなインデックスを生成
@@ -35,18 +27,10 @@ export function getRandomAvatarPath(): string {
  */
 export function getRandomAvatarPaths(count: number): string[] {
   const avatarImages = [
-    'avator1.svg',
-    'avator2.svg',
-    'avator3.svg',
-    'avator4.svg',
-    'avator5.svg',
-    'avator6.svg',
-    'avator7.svg',
-    'avator8.svg',
-    'avator9.svg',
-    'avator10.svg',
-    'avator11.svg',
-    'avator12.svg',
+    'avator1.png',
+    'avator2.png',
+    'avator3.png',
+    'avator4.png',
   ];
 
   // 配列をシャッフル
