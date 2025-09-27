@@ -16,6 +16,7 @@ export default function Avatar({ src, alt, width = 40, height = 40, className = 
       alt={alt}
       width={width}
       height={height}
+      unoptimized
     />
   );
 } 

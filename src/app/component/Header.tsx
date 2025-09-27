@@ -145,8 +145,8 @@ export default function Header() {
             {/* ロゴとタイトル */}
             <Link href="/" className="flex items-center">
               <Image
-                className="h-10 w-auto"
-                src="/img/logo-title.svg"
+                className="h-14 w-auto"
+                src="/img/logo.svg"
                 alt="みんなの政治ロゴ"
                 width={120}
                 height={40}

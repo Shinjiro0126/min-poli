@@ -36,6 +36,33 @@ export async function getWorkSheetsWithAnswerStatus(userId: string | null): Prom
   return data;
 }
 
+export async function getWorkSheetsWithAnswerStatusFromDate(
+  userId: string | null, 
+  startAt: string
+): Promise<WorksheetWithAnswerStatus[]> {
+  const { data, error } = await supabase
+    .rpc('get_worksheets_with_answer_status', {
+      p_user_id: userId,
+    })
+  
+  if (error) {
+    console.error('Error fetching worksheet answers:', error);
+    return [];
+  }
+  
+  if (!data || data.length === 0) {
+    return [];
+  }
+
+  // start_atが指定された日時以降のものをフィルタリング
+  const filteredData = data.filter((worksheet: WorksheetWithAnswerStatus) => {
+    if (!worksheet.start_at) return false;
+    return new Date(worksheet.start_at) >= new Date(startAt);
+  });
+
+  return filteredData;
+}
+
 export async function getUserAnswer(worksheetId: number, userId: string | null): Promise<TAnswer | null> {
   if (!userId || userId === "") {
     return null;

@@ -13,8 +13,8 @@ export default function Footer() {
             aria-label="みんなの政治ホーム"
           >
             <Image
-              className="h-10 md:h-12 w-auto filter brightness-0 invert"
-              src="/img/logo-title.svg"
+              className="h-10 md:h-12 w-auto"
+              src="/img/logo-white.svg"
               alt="みんなの政治ロゴ"
               width={120}
               height={44}

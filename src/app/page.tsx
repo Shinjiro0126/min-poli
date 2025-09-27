@@ -8,7 +8,7 @@ import { MdOutlineCalendarToday } from "react-icons/md";
 import { MdShare } from "react-icons/md";
 import { MdLightbulb } from "react-icons/md";
 import { getRandomAvatarPaths } from "@/util/avator_img";
-import { getLatestWorksheetWithAnswerStatus } from "@/lib/answer/answer";
+import { getLatestWorksheetWithAnswerStatus, getWorkSheetsWithAnswerStatusFromDate } from "@/lib/answer/answer";
 import { getLatestSummary } from "@/lib/summary/summary";
 import { calcInterestBoostPercent } from "@/lib/answer/util";
 import { getServerSession } from "next-auth";
@@ -22,6 +22,22 @@ export default async function Home() {
   // 最新のワークシートを取得
   const latestWorksheet = await getLatestWorksheetWithAnswerStatus(userId);
 
+  // 今週の日曜日を取得する関数
+  const getThisWeekSunday = (): string => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0が日曜日、1が月曜日...
+    const daysToSubtract = dayOfWeek; // 日曜日なら0、月曜日なら1...
+    
+    const sunday = new Date(today);
+    sunday.setDate(today.getDate() - daysToSubtract);
+    sunday.setHours(0, 0, 0, 0); // 時刻を00:00:00に設定
+    
+    return sunday.toISOString();
+  };
+
+  //今週日曜日以降のワークシートを取得
+  const weekWorksheet = await getWorkSheetsWithAnswerStatusFromDate(userId, getThisWeekSunday());
+
   // 最新のニュースサマリーを取得
   const latestSummary = await getLatestSummary();
 
@@ -29,28 +45,28 @@ export default async function Home() {
   const avatarPaths = getRandomAvatarPaths(3);
 
   // 関心向上率を計算
-  const interestBoostPercent = latestWorksheet && latestWorksheet.start_at 
-    ? calcInterestBoostPercent(
-        latestWorksheet.vote_count || 0,
-        latestWorksheet.start_at,
-        0 // interest_scoreは一時的にデフォルト値を使用
-      )
-    : 53; // デフォルト値
+  // const interestBoostPercent = latestWorksheet && latestWorksheet.start_at 
+  //   ? calcInterestBoostPercent(
+  //       latestWorksheet.vote_count || 0,
+  //       latestWorksheet.start_at,
+  //       0 // interest_scoreは一時的にデフォルト値を使用
+  //     )
+  //   : 53; // デフォルト値
 
   return (
     <>
       <div 
         className="min-h-screen font-[family-name:var(--font-geist-sans)]"
         >
-        <div className="py-16 px-3 mb-12 position-relative h-[256px] relative" style={{ backgroundImage: 'url("/img/main-v.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white"></div>
+        <div className="py-16 px-3 mb-12 position-relative h-[256px] relative" style={{ backgroundImage: 'url("/img/main-v.png")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}>
+          {/* <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white"></div> */}
             <div className="max-w-2xl mx-auto relative z-10">
-              <h2 className="h4 mb-4">今日のテーマで投票しよう！</h2>
-              <p className="mb-6">政治や社会課題について、みんなで考えて意見を共有しよう！</p>
+              <h2 className="h4 mb-4 inline-block px-2 py-1 rounded bg-black/50 text-white">今日のテーマで投票しよう！</h2>
+              <p className="mb-6 inline-block px-2 py-1 rounded bg-black/50 text-white">政治や社会課題について、<br className="sm:hidden" />みんなで考えて意見を共有しよう！</p>
               <div className="flex gap-4 items-center">
                 <div className="flex -space-x-1 overflow-hidden">
                   {avatarPaths.map((avatarPath, index) => (
-                    <div key={index} className="inline-block rounded-full ring-1 ring-stone-300 bg-stone-50 p-2">
+                    <div key={index} className="inline-block rounded-full ring-1 ring-stone-300 bg-white p-2">
                       <Avatar 
                         src={avatarPath} 
                         alt={`参加者${index + 1}`}
@@ -109,25 +125,22 @@ export default async function Home() {
               </Card>
               <Card className="shadow-md text-center">
                 <div className="flex justify-center mb-4">
-                  <FaHeartbeat className="text-[44px] text-stone-700" />
+                  <MdOutlineCalendarToday className="text-[44px] text-stone-700" />
                 </div>
-                <div className="h3 mb-1">{interestBoostPercent}<span className="font-caption">%</span></div>
-                <p className="text-stone-700 font-body-sm">関心向上率</p>
+                <div className="h3 mb-1">{weekWorksheet.filter(worksheet => worksheet.is_answer).length}</div>
+                <p className="text-stone-700 font-body-sm">今週の投票回数</p>
               </Card>
             </div>
 
             {/* 後で実装 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 hidden">
-              <Card className="shadow-md">
-                <div className="flex gap-4 items-center mb-2">
-                  <MdOutlineCalendarToday className="text-[24px] text-stone-700" />
-                  <div>
-                    <div className="font-body-sm">今週の投票回数</div>
-                    <h4>5<span className="font-body-sm">回</span></h4>
-                  </div>
+              {/* <Card className="shadow-md text-center">
+                <div className="flex justify-center mb-4">
+                  <FaHeartbeat className="text-[44px] text-stone-700" />
                 </div>
-                <p>今週は後2回だよ！頑張って</p>
-              </Card>
+                <div className="h3 mb-1">{interestBoostPercent}<span className="font-caption">%</span></div>
+                <p className="text-stone-700 font-body-sm">関心向上率</p>
+              </Card> */}
               <Card className="shadow-md">
                 <div className="flex gap-4 items-center mb-2">
                   <MdShare className="text-[24px] text-stone-700" />
