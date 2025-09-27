@@ -3,14 +3,12 @@ import Avatar from "./component/Avatar";
 import Card from "./component/Card";
 import Button from "./component/Button";
 import { LuUsers } from "react-icons/lu";
-import { FaHeartbeat } from "react-icons/fa";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { MdShare } from "react-icons/md";
 import { MdLightbulb } from "react-icons/md";
 import { getRandomAvatarPaths } from "@/util/avator_img";
 import { getLatestWorksheetWithAnswerStatus, getWorkSheetsWithAnswerStatusFromDate } from "@/lib/answer/answer";
 import { getLatestSummary } from "@/lib/summary/summary";
-import { calcInterestBoostPercent } from "@/lib/answer/util";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
 
