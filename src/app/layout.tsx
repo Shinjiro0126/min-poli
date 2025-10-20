@@ -3,6 +3,8 @@ import Header from "@/app/component/Header";
 import Footer from "@/app/component/Footer";
 import Providers from "./providers";
 import "@/app/globals.css";
+import { GoogleAnalytics } from '@next/third-parties/google';
+import GAClient from './ga-client';
 
 import {
   geistSans,
@@ -24,7 +26,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head />
+      <head>
+        {/* <Script async src="https://www.googletagmanager.com/gtag/js?id=G-S4WX9MPBJ8"></Script>
+        <Script>
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-S4WX9MPBJ8');
+          `}
+        </Script> */}
+      </head>
       <body
         className={`${reggaeOne.variable} ${zenKurenaido.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-stone-50 flex flex-col`}
       >
@@ -32,9 +45,13 @@ export default function RootLayout({
           <Header />
           <main className="pt-16 min-h-screen">
             {children}
+            <GAClient />
           </main>
           <Footer />
         </Providers>
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   );

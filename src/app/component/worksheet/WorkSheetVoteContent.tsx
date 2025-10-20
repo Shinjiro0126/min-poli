@@ -1,5 +1,7 @@
 import React from 'react';
 import Image from "next/image";
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
 import { getUserAnswer, getWorksheetById } from "@/lib/answer/answer";
@@ -46,6 +48,16 @@ export default async function WorkSheetVoteContent({ worksheetId }: Props) {
     redirect(`/worksheet/${worksheetId}`);
   }
 
+  // HTMLをサニタイズする関数
+  const sanitizeHTML = (html: string): string => {
+    const window = new JSDOM('').window;
+    const purify = DOMPurify(window);
+    return purify.sanitize(html, {
+      ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote'],
+      ALLOWED_ATTR: []
+    });
+  };
+
   return (
     <>
       <div className="w-full mb-4">
@@ -60,7 +72,12 @@ export default async function WorkSheetVoteContent({ worksheetId }: Props) {
       </div>
 
       <div className="w-full mb-12">
-        {worksheet.description}
+        <div 
+          className="prose prose-stone max-w-none"
+          dangerouslySetInnerHTML={{ 
+            __html: sanitizeHTML(worksheet.description || '') 
+          }} 
+        />
       </div>
 
       <VoteButton worksheetId={worksheetId.toString()} className="w-full max-w-2xl px-4" />
