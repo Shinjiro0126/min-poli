@@ -4,7 +4,6 @@ import Footer from "@/app/component/Footer";
 import Providers from "./providers";
 import "@/app/globals.css";
 import { GoogleAnalytics } from '@next/third-parties/google';
-import GAClient from './ga-client';
 
 import {
   geistSans,
@@ -45,7 +44,6 @@ export default function RootLayout({
           <Header />
           <main className="pt-16 min-h-screen">
             {children}
-            <GAClient />
           </main>
           <Footer />
         </Providers>
